@@ -12,6 +12,9 @@ spring:
     url: localhost
     username: root
     password: 12345678
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 jwt:
   token:
     secret: hello
