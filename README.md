@@ -22,4 +22,5 @@
 
 # ERD
 
-![멋사](/uploads/cba22e18f64672058ef196d4c72cf2![ERD](/uploads/76d87dca71a6abf8f45bc6a19ed23a0d/ERD.png)
+
+![ERD](/uploads/76d87dca71a6abf8f45bc6a19ed23a0d/ERD.png)
