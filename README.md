@@ -19,3 +19,7 @@
 - 배포 : Docker
 - 데이터베이스 : MySql 8.0
 - 필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security
+
+#ERD
+
+![멋사](/uploads/cba22e18f64672058ef196d4c72cf2![ERD](/uploads/76d87dca71a6abf8f45bc6a19ed23a0d/ERD.png)
