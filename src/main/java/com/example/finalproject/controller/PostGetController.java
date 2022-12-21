@@ -2,7 +2,7 @@
 //
 //import com.example.finalproject.domain.Post;
 //import com.example.finalproject.service.PostGetService;
-//import lombok.RequiredArgsConstructor;
+//import lombok.AllArgsConstructor;
 //import org.springframework.web.bind.annotation.GetMapping;
 //import org.springframework.web.bind.annotation.PathVariable;
 //import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +10,7 @@
 //
 //@RestController
 //@RequestMapping("/api/v1/posts")
-//@RequiredArgsConstructor
+//@AllArgsConstructor
 //public class PostGetController {
 //
 //    private final PostGetService service;

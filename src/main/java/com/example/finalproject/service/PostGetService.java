@@ -1,15 +1,15 @@
 //package com.example.finalproject.service;
 //
 //import com.example.finalproject.domain.Post;
-//import lombok.RequiredArgsConstructor;
+//import lombok.AllArgsConstructor;
 //import org.springframework.stereotype.Service;
 //
 //@Service
-//@RequiredArgsConstructor
+//@AllArgsConstructor
 //public class PostGetService {
 //    private final PostGetRepository repository;
 //
-//    interface PostGetRepository {
+//    public interface PostGetRepository {
 //        Post find (long id);
 //    }
 //

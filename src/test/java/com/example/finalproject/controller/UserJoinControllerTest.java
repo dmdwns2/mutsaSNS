@@ -4,7 +4,7 @@ import com.example.finalproject.domain.dto.UserDto;
 import com.example.finalproject.domain.dto.UserJoinRequest;
 import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
-import com.example.finalproject.service.UserJoinService;
+import com.example.finalproject.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +30,7 @@ class UserJoinControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    UserJoinService service;
+    UserService service;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -74,6 +74,27 @@ class UserJoinControllerTest {
                         .content(objectMapper.writeValueAsBytes(userJoinRequest)))
                 .andDo(print())
                 .andExpect(status().isConflict());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 -id없음")
+    @WithMockUser
+    void login_fail1() throws Exception {
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+                .userName("bappe")
+                .password("123qwe")
+                .build();
+
+        // id, pw를 보내서
+        when(service.login(any(), any())).thenThrow(new AppException(ErrorCode.NOT_FOUND, ""));
+
+        // NOT_FOUND를 받으면 잘 만든 것이다
+        mockMvc.perform(post("/api/v1/users/login")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(userJoinRequest)))
+                .andDo(print())
+                .andExpect(status().isNotFound());
     }
 
 }
