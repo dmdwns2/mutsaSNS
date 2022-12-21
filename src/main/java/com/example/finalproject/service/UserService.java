@@ -7,13 +7,13 @@ import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
 import com.example.finalproject.repository.UserRepository;
 import com.example.finalproject.utils.JwtTokenUtil;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository repository;
