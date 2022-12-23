@@ -10,6 +10,12 @@ spring:
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+  devtools:
+    livereload:
+      enabled: true
+  profiles:
+    include:
+      - aws
 jwt:
   token:
     secret: hello

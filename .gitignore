@@ -6,6 +6,7 @@ build/
 !**/src/test/**/build/
 # .gitignore
 application-aws.yml
+src/main/resources/application-aws.yml
 ### STS ###
 .apt_generated
 .classpath
