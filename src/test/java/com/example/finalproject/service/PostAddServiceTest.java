@@ -10,7 +10,6 @@ class PostAddServiceTest {
 
     private static final String TITLE = "title";
     private static final String BODDY = "body";
-    private static final String USERNAME = "userName";
 
     JpaRepository repository;
 
@@ -21,7 +20,6 @@ class PostAddServiceTest {
         service.add(new PostAddService.PostAddCommand(TITLE,BODDY));
         assertEquals(TITLE, repositoryStub.getLastTitle());
         assertEquals(BODDY, repositoryStub.getLastBody());
-        assertEquals(USERNAME, repositoryStub.getLastUserName());
     }
 
 
@@ -29,7 +27,6 @@ class PostAddServiceTest {
 
         private String lastTitle;
         private String lastBody;
-        private String lastUserName;
 
         @Override
         public long add(String title, String body) {
@@ -46,9 +43,6 @@ class PostAddServiceTest {
             return lastBody;
         }
 
-        public String getLastUserName() {
-            return lastUserName;
-        }
     }
 
 
