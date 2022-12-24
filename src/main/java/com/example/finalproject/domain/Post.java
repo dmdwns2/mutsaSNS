@@ -1,13 +1,30 @@
 package com.example.finalproject.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
+import com.example.finalproject.domain.dto.BaseEntity;
+import lombok.*;
+
+import javax.persistence.*;
 
 @Getter
+@Builder
 @AllArgsConstructor
-public class Post {
-    private final long id;
-    private final String title;
-    private final String body;
-    private final String userName;
+@NoArgsConstructor
+@Entity
+@Setter
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
+@Table(name = "product")
+public class Post extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String title;
+
+    @Column(nullable = false)
+    private String body;
+
+    @Column(nullable = false)
+    private String userName;
 }
