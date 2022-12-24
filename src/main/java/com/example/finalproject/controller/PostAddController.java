@@ -19,14 +19,13 @@ public class PostAddController {
     public static class PostAddRequest {
         private final String title;
         private final String body;
-        private final String userName;
     }
 
     @PostMapping("/api/v1/posts")
     public void add(@RequestBody PostAddRequest request){
         validate(request);
         service.add(new PostAddService.PostAddCommand(
-                request.title,request.body,request.userName));
+                request.title,request.body));
     }
 
     public void validate(PostAddRequest request){
@@ -38,9 +37,6 @@ public class PostAddController {
         }
         if (isBlank(request.body)) {
             throw new IllegalArgumentException("body is empty");
-        }
-        if (isBlank(request.userName)) {
-            throw new IllegalArgumentException("userName is empty");
         }
     }
 }

@@ -12,11 +12,10 @@ public class PostAddJpaRepositoryAdapter implements PostAddService.PostAddReposi
     private final JpaPostRepository delegate;
 
     @Override
-    public long add(String title, String body, String userName) {
+    public long add(String title, String body) {
         PostEntity savedEntity = delegate.save(PostEntity.builder()
                 .title(title)
                 .body(body)
-                .userName(userName)
                 .build());
         return savedEntity.getId();
     }

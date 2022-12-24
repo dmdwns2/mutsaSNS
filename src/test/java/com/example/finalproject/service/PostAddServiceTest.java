@@ -18,7 +18,7 @@ class PostAddServiceTest {
     public void add_one_post(){
         PostAddRepositoryStub repositoryStub = new PostAddRepositoryStub();
         PostAddService service = new PostAddService(repositoryStub);
-        service.add(new PostAddService.PostAddCommand(TITLE,BODDY,USERNAME));
+        service.add(new PostAddService.PostAddCommand(TITLE,BODDY));
         assertEquals(TITLE, repositoryStub.getLastTitle());
         assertEquals(BODDY, repositoryStub.getLastBody());
         assertEquals(USERNAME, repositoryStub.getLastUserName());
@@ -32,10 +32,9 @@ class PostAddServiceTest {
         private String lastUserName;
 
         @Override
-        public long add(String title, String body, String userName) {
+        public long add(String title, String body) {
             lastTitle = title;
             lastBody = body;
-            lastUserName = userName;
             return 0;
         }
 
@@ -52,18 +51,20 @@ class PostAddServiceTest {
         }
     }
 
+
+
     // 비어있을 때
     @Test
     public void add_post_with_empty_title(){
         assertThrows(IllegalArgumentException.class, () -> {
             PostAddService service = new PostAddService(new EmptyRepositoryStub());
-            service.add(new PostAddService.PostAddCommand("", "body", "userName"));
+            service.add(new PostAddService.PostAddCommand("", "body"));
         });
     }
 
     static class EmptyRepositoryStub implements PostAddService.PostAddRepository {
         @Override
-        public long add(String title, String body, String userName) {
+        public long add(String title, String body) {
             return 0;
         }
     }
@@ -72,15 +73,7 @@ class PostAddServiceTest {
     public void add_post_with_empty_body(){
         assertThrows(IllegalArgumentException.class, () -> {
             PostAddService service = new PostAddService(new EmptyRepositoryStub());
-            service.add(new PostAddService.PostAddCommand("title", "", "userName"));
-        });
-    }
-
-    @Test
-    public void add_post_with_empty_userName(){
-        assertThrows(IllegalArgumentException.class, () -> {
-            PostAddService service = new PostAddService(new EmptyRepositoryStub());
-            service.add(new PostAddService.PostAddCommand("title", "body", ""));
+            service.add(new PostAddService.PostAddCommand("title", ""));
         });
     }
 }

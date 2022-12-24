@@ -15,19 +15,19 @@ public class PostAddService {
     private final PostAddRepository repository;
 
     public interface PostAddRepository {
-        long add(String title, String body, String userName);
+        // @return id of the inserted post
+        long add(String title, String body);
     }
 
     @AllArgsConstructor
     public static class PostAddCommand {
         private final String title;
         private final String body;
-        private final String userName;
     }
 
     public long add(PostAddCommand command){
         validate(command);
-        return repository.add(command.title, command.body, command.userName);
+        return repository.add(command.title, command.body);
     }
 
     private void validate(PostAddCommand command) {
@@ -40,9 +40,5 @@ public class PostAddService {
         if(StringUtils.isBlank(command.body)){
             throw new IllegalArgumentException("body is empty");
         }
-        if(StringUtils.isBlank(command.userName)){
-            throw new IllegalArgumentException("userName is empty");
-        }
-
     }
 }
