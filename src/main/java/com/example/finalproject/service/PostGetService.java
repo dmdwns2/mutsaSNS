@@ -1,6 +1,6 @@
 package com.example.finalproject.service;
 
-import com.example.finalproject.domain.Post;
+import com.example.finalproject.domain.dto.Post;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 

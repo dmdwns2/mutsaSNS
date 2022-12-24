@@ -1,4 +1,4 @@
-package com.example.finalproject.domain.dto;
+package com.example.finalproject.domain;
 
 import lombok.Getter;
 import lombok.Setter;

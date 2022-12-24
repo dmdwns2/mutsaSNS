@@ -1,6 +1,6 @@
 package com.example.finalproject.adapter;
 
-import com.example.finalproject.domain.dto.PostEntity;
+import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.repository.JpaPostRepository;
 import com.example.finalproject.service.PostAddService;
 import lombok.AllArgsConstructor;

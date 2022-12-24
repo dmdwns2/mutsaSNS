@@ -1,6 +1,6 @@
 package com.example.finalproject.controller;
 
-import com.example.finalproject.domain.Post;
+import com.example.finalproject.domain.dto.Post;
 import com.example.finalproject.service.PostGetService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
