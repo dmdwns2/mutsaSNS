@@ -1,6 +1,6 @@
 package com.example.finalproject.exception;
 
-import com.example.finalproject.domain.Response;
+import com.example.finalproject.domain.response.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

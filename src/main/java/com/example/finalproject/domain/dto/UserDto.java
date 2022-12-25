@@ -1,16 +1,25 @@
 package com.example.finalproject.domain.dto;
 
+import com.example.finalproject.domain.UserEntity;
+import com.example.finalproject.enums.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 @Getter
 public class UserDto {
-    private Long id;
-    private String userName;
-    private String password;
+    private final Long id;
+    private final String userName;
+    private final String password;
+    private final UserRole userRole;
+
+    public static UserDto fromEntity(UserEntity entity){
+        return new UserDto(entity.getId(),
+                entity.getUserName(),
+                entity.getPassword(),
+                entity.getRole());
+    }
+
 }
