@@ -29,13 +29,19 @@ public class PostService {
         return postDto;
     }
 
-    public PostAddResponse add(PostAddRequest dto) {
-        PostEntity article = dto.toEntity();
-        PostEntity savedPost = repository.save(article);
-        return new PostAddResponse(savedPost.getId(), savedPost.getTitle(), savedPost.getBody());
+    public PostAddResponse add(PostAddRequest postAddRequest, String userName) {
+        PostEntity postEntity = PostEntity.builder()
+                .title(postAddRequest.getTitle())
+                .body(postAddRequest.getBody())
+                .userName(userName)
+                .build();
+        PostEntity savePost = repository.save(postEntity);
+        return new PostAddResponse(savePost.getId(), savePost.getTitle(), savePost.getBody(),
+                "게시물 등록에 성공 했습니다.");
     }
 
-    // 페이징
+
+        // 페이징
     public List<PostResponse> findAllByPage(Pageable pageable) {
         Page<PostEntity> visits = repository.findAll(pageable);
 

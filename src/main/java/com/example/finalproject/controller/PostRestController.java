@@ -29,7 +29,7 @@ public class PostRestController {
     @PostMapping("")
     public ResponseEntity<PostAddResponse> addPost(@RequestBody PostAddRequest postAddRequest, Authentication authentication) {
         String userName = authentication.getName();
-        PostAddResponse response = service.add(postAddRequest);
+        PostAddResponse response = service.add(postAddRequest, userName);
         return ResponseEntity.ok().body(response);
     }
 
