@@ -2,7 +2,6 @@ package com.example.finalproject.service;
 
 import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.UserDto;
-import com.example.finalproject.domain.dto.UserJoinRequest;
 import com.example.finalproject.enums.UserRole;
 import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
@@ -29,10 +28,7 @@ public class UserService {
 
     @Value("${jwt.token.secret}")
     private String secretKey;
-
-
-
-    private Long expiredTimeMs = 1000 * 60 * 60l;
+    private long expiredTimeMs = 1000 * 60 * 60; // 1시간
 
 
     public UserDto join(String userName, String password) {
@@ -53,6 +49,13 @@ public class UserService {
         return UserDto.fromEntity(savedUser);
     }
     public String login(String userName, String password) {
+        UserEntity userEntity = userRepository.findByUserName(userName)
+                .orElseThrow(() ->
+                        new AppException(ErrorCode.NOT_FOUNDED, String.format("userName을 확인해주세요")));
+
+        if(encoder.matches(password, userEntity.getPassword())){
+            throw new AppException(ErrorCode.INVALID_PASSWORD, String.format("password를 확인해주세요"));
+        }
         return JwtTokenUtil.createToken(userName, secretKey, expiredTimeMs);
     }
 }
