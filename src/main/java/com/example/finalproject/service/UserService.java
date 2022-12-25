@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import static java.util.Objects.isNull;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 @Service
 @Slf4j
@@ -69,6 +70,12 @@ public class UserService {
             throw new IllegalArgumentException("userName is empty");
         }
         if(isNull(password)) {
+            throw new IllegalArgumentException("password is empty");
+        }
+        if(isBlank(userName)) {
+            throw new IllegalArgumentException("userName is empty");
+        }
+        if(isBlank(password)) {
             throw new IllegalArgumentException("password is empty");
         }
     }
