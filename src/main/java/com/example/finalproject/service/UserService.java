@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static java.util.Objects.isNull;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
@@ -37,6 +39,9 @@ public class UserService {
             throw new AppException(ErrorCode.DUPLICATED_USER_NAME, String.format("UserName %s is duplicated", userName));
         });
 
+        // username,password 안적는거 check
+        validate(userName,password);
+
         // 위에서 에러가 안났다면 회원가입(DB에 저장)
         UserEntity user = UserEntity.builder()
                 .userName(userName)
@@ -57,5 +62,14 @@ public class UserService {
             throw new AppException(ErrorCode.INVALID_PASSWORD, String.format("password를 확인해주세요"));
         }
         return JwtTokenUtil.createToken(userName, secretKey, expiredTimeMs);
+    }
+
+    public void validate(String userName, String password ) {
+        if(isNull(userName)) {
+            throw new IllegalArgumentException("userName is empty");
+        }
+        if(isNull(password)) {
+            throw new IllegalArgumentException("password is empty");
+        }
     }
 }
