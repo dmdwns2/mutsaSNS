@@ -13,6 +13,6 @@ public class UserJoinResponse {
     private String userName;
 
     public static UserJoinResponse fromUser(UserDto user) {
-        return new UserJoinResponse();
+        return new UserJoinResponse(user.getId(), user.getUserName());
     }
 }
