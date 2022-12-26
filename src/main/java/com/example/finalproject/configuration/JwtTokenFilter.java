@@ -59,10 +59,11 @@ public class JwtTokenFilter extends OncePerRequestFilter {
         log.info("Token Filter userName:{}", userName);
 
 
-        // UserName넣기
+        // UserName넣기, 권한부여
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
                 user.getUserName(), null, List.of(new SimpleGrantedAuthority("USER"))
         );
+        // 디테일 넣기
         authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
