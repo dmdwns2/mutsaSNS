@@ -11,7 +11,7 @@ import org.springframework.http.HttpStatus;
         INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error"),
         USER_NOT_FOUNDED(HttpStatus.NOT_FOUND, ""),
         NOT_FOUNDED(HttpStatus.NOT_FOUND, ""),
-        INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "");
+        INVALID_PASSWORD(HttpStatus.BAD_REQUEST, "password does not match");
 
 
 

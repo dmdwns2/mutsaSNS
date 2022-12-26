@@ -59,9 +59,12 @@ public class UserService {
                 .orElseThrow(() ->
                         new AppException(ErrorCode.NOT_FOUNDED, String.format("userName을 확인해주세요")));
 
-        if(encoder.matches(password, userEntity.getPassword())){
+        if(!encoder.matches(password, userEntity.getPassword())){
             throw new AppException(ErrorCode.INVALID_PASSWORD, String.format("password를 확인해주세요"));
         }
+
+        validate(userName,password);
+
         return JwtTokenUtil.createToken(userName, secretKey, expiredTimeMs);
     }
 
@@ -79,4 +82,5 @@ public class UserService {
             throw new IllegalArgumentException("password is empty");
         }
     }
+
 }
