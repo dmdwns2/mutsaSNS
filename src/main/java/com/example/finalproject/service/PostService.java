@@ -52,7 +52,7 @@ public class PostService {
     public PostPutResponse update(Long id, PostPutRequest postPutRequest, String userName) {
         Optional<PostEntity> entity = this.repository.findById(id);
         // 인증에서 받은 현재 로그인한 아이디와, id값에 존재하는 userName을 비교해야함.
-        if(entity.get().getUserName() != userName){
+        if(!entity.get().getUserName().equals(userName)){
             throw new IllegalArgumentException("본인의 게시물만 수정할 수 있습니다.");
         }
         entity.ifPresent(t ->{
