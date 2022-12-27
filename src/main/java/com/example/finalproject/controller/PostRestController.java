@@ -37,6 +37,13 @@ public class PostRestController {
         return Response.success(response);
     }
 
+    @DeleteMapping ("/{id}")
+    public Response<PostDelResponse> delete(@PathVariable Long id, Authentication authentication) {
+        String userName = authentication.getName();
+        PostDelResponse response = service.delete(id, userName);
+        return Response.success(response);
+    }
+
     @GetMapping
     public Response<List<PostResponse>> list(Pageable pageable) {
         return Response.success(service.findAllByPage(pageable));

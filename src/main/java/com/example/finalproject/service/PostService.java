@@ -3,7 +3,6 @@ package com.example.finalproject.service;
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.dto.*;
 import com.example.finalproject.repository.PostRepository;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,7 +34,7 @@ public class PostService {
                 .build();
         PostEntity savePost = repository.save(postEntity);
         return new PostAddResponse(savePost.getId(), savePost.getTitle(), savePost.getBody(), savePost.getUserName(),
-                "게시물 등록에 성공 했습니다.");
+                "포스트 등록 완료");
     }
 
 
@@ -67,7 +66,15 @@ public class PostService {
             this.repository.save(t);
         });
         return new PostPutResponse(entity.get().getId(),entity.get().getTitle(), entity.get().getBody(),entity.get().getUserName(),
-                "게시물 수정에 성공했습니다.");
+                "포스트 수정 완료");
     }
 
+    public PostDelResponse delete(Long id,String userName) {
+        Optional<PostEntity> entity = this.repository.findById(id);
+        if(!entity.get().getUserName().equals(userName)){
+            throw new IllegalArgumentException("본인의 게시물만 삭제할 수 있습니다.");
+        }
+        repository.deleteById(id);
+        return new PostDelResponse(id, "포스트 삭제 완료");
+    }
 }
