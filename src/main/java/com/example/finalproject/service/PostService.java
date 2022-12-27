@@ -4,6 +4,7 @@ import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.dto.*;
 import com.example.finalproject.repository.PostRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -39,13 +40,12 @@ public class PostService {
 
 
         // 페이징
-    public List<PostResponse> findAllByPage(Pageable pageable) {
+    public Page<PostResponse> findAllByPage(Pageable pageable) {
         Page<PostEntity> visits = repository.findAll(pageable);
 
-        // Visits --> VisitResponse
-        return visits.stream()
+        return new PageImpl<>(visits.stream()
                 .map(PostEntity::toResponse)
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
     public PostPutResponse update(Long id, PostPutRequest postPutRequest, String userName) {
