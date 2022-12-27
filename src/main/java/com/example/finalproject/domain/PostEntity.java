@@ -30,7 +30,7 @@ public class PostEntity extends BaseEntity{
 
     public PostResponse toResponse() {
         return PostResponse.builder()
-                .id(this.id)
+                .postId(this.id)
                 .title(this.title)
                 .body(this.body)
                 .userName(this.userName)
