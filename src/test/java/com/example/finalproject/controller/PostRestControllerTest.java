@@ -36,6 +36,9 @@ class PostRestControllerTest {
     @Autowired
     ObjectMapper objectMapper;
 
+
+    // GET /posts/1 로 조회시
+    //조회 성공 - id, title, body, userName 4가지 항목이 있는지 검증
     @Test
     void ID조회_확인() throws Exception {
         Long id = 1l;
@@ -56,7 +59,7 @@ class PostRestControllerTest {
     @Test
     void ADD_동작_확인() throws Exception {
         PostAddRequest dto = new PostAddRequest("제목입니다.", "내용입니다.");
-        given(articleService.add(any(),any())).willReturn(new PostAddResponse(1l, dto.getTitle(), dto.getBody(), any(),"테스트"));
+        given(articleService.add(any(), any())).willReturn(new PostAddResponse(1l, dto.getTitle(), dto.getBody(), any(), "테스트"));
 
         mockMvc.perform(post("/api/v1/posts")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -68,5 +71,52 @@ class PostRestControllerTest {
                 .andExpect(jsonPath("$.title").value("제목입니다."))
                 .andExpect(jsonPath("$.body").exists())
                 .andDo(print());
+    }
+
+    @Test
+    void 작성_인증_실패_JWT를_Bearer_Token으로_보내지_않은_경우() {
+    }
+
+    @Test
+    void 작성_인증_실패_JWT가_유효하지_않은_경우() {
+    }
+
+    // 포스트 수정
+    @Test
+    void 수정_인증_실패() {
+    }
+
+    @Test
+    void 수정_작성자_불일치() {
+    }
+
+    @Test
+    void 수정_데이터베이스_에러() {
+    }
+
+    @Test
+    void 수정_성공() {
+    }
+
+    // 포스트 삭제
+    @Test
+    void 삭제_인증_실패() {
+    }
+
+    @Test
+    void 삭제_작성자_불일치() {
+    }
+
+    @Test
+    void 삭제_데이터베이스_에러() {
+    }
+
+    @Test
+    void 삭제_성공() {
+    }
+
+    // 포스트 리스트
+    @Test
+    void 조회_성공_0번이_1번보다_날짜가_최신() {
     }
 }
