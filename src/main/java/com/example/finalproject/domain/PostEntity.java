@@ -2,16 +2,14 @@ package com.example.finalproject.domain;
 
 import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.PostResponse;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor

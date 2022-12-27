@@ -10,15 +10,17 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode
-public class PostAddRequest {
+public class PostPutRequest {
 
     private final String title;
     private final String body;
+    private final String userName;
 
     public PostEntity toEntity() {
         PostEntity postEntity = PostEntity.builder()
                 .title(this.title)
                 .body(this.body)
+                .userName(this.userName)
                 .build();
         return postEntity;
     }

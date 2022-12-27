@@ -1,11 +1,9 @@
 package com.example.finalproject.service;
 
 import com.example.finalproject.domain.PostEntity;
-import com.example.finalproject.domain.dto.PostAddRequest;
-import com.example.finalproject.domain.dto.PostAddResponse;
-import com.example.finalproject.domain.dto.PostDto;
-import com.example.finalproject.domain.dto.PostResponse;
+import com.example.finalproject.domain.dto.*;
 import com.example.finalproject.repository.PostRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,7 +34,7 @@ public class PostService {
                 .userName(userName)
                 .build();
         PostEntity savePost = repository.save(postEntity);
-        return new PostAddResponse(savePost.getId(), savePost.getTitle(), savePost.getBody(),
+        return new PostAddResponse(savePost.getId(), savePost.getTitle(), savePost.getBody(), savePost.getUserName(),
                 "게시물 등록에 성공 했습니다.");
     }
 
@@ -51,8 +49,24 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-//    public Optional<PostEntity> update(Long id, PostAddRequest postAddRequest) {
-////        Optional<PostEntity>
-//        return new PostAddResponse(get.);
-//    }
+    public PostPutResponse update(Long id, PostPutRequest postPutRequest, String userName) {
+        Optional<PostEntity> entity = this.repository.findById(id);
+        entity.ifPresent(t ->{
+            // 내용이 널이 아니라면 엔티티의 객체를 바꿔준다.
+            if(postPutRequest.getBody() != null) {
+                t.setBody(postPutRequest.getBody());
+            }
+            if(postPutRequest.getTitle() != null) {
+                t.setTitle(postPutRequest.getTitle());
+            }
+            if(postPutRequest.getUserName() != userName){
+                throw new IllegalArgumentException("본인의 게시물만 수정할 수 있습니다.");
+            }
+            // 이걸 실행하면 idx 때문에 update가 실행됩니다.
+            this.repository.save(t);
+        });
+        return new PostPutResponse(entity.get().getId(),entity.get().getTitle(), entity.get().getBody(),entity.get().getUserName(),
+                "게시물 수정에 성공했습니다.");
+    }
+
 }
