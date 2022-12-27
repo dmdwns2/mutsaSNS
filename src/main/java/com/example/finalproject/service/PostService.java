@@ -50,4 +50,8 @@ public class PostService {
                 .map(PostEntity::toResponse)
                 .collect(Collectors.toList());
     }
+
+    public Optional<PostEntity> update(Long id, PostAddRequest postAddRequest) {
+
+    }
 }

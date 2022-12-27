@@ -7,7 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Getter
 @Builder
@@ -24,7 +26,8 @@ public class PostEntity extends BaseEntity{
 
 
     public static PostDto of(PostEntity postEntity) {
-        return new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getBody(), postEntity.getUserName());
+        return new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getBody(),
+                postEntity.getUserName(), postEntity.getCreatedAt(), postEntity.getLastModifiedAt());
     }
 
     public PostResponse toResponse() {
