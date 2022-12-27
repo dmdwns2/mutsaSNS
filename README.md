@@ -13,7 +13,7 @@
 ## 주소
 http://ec2-13-230-162-7.ap-northeast-1.compute.amazonaws.com:8080/swagger-ui/
 
-<br> <br> <br>
+<br> 
 
 ## 개발환경 
 
@@ -32,7 +32,7 @@ http://ec2-13-230-162-7.ap-northeast-1.compute.amazonaws.com:8080/swagger-ui/
 
 ## 👨‍👨‍👧‍👦 User
 
-<br> <br> <br>
+<br> 
 
 > ### Join
 회원가입 기능 
@@ -48,7 +48,7 @@ http://ec2-13-230-162-7.ap-northeast-1.compute.amazonaws.com:8080/swagger-ui/
 
 ## 📋 Post
 
-<br> <br> <br>
+<br> 
 
 > ### Get
 게시물 조회기능
@@ -88,7 +88,24 @@ page형식으로 전체 list를 조회하는 기능
 
 <br> <br> <br>
 
-# ERD
+## 인증/인가 방식
+
+> ### SpringSecurity, JWT 사용
+
+JWT Token발급하기
+
+JwtTokenFilter 인증 계층 추가 하기
+
+모든 요청에 권한 부여하기
+
+Token이 없으면 권한 부여 하지 않기
+
+Token의 유효기간이 지났는지 확인하기
+
+Token에서 userName꺼내서 Controller에서 사용
+
+
+## ERD
 
 
 ![ERD](/uploads/025ebf46f1bae0e616bbcf179a437499/ERD.png)
