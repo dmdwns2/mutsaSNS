@@ -25,7 +25,7 @@ public class UserService {
     private final BCryptPasswordEncoder encoder;
     public UserEntity getUserByUserName(String userName) {
         UserEntity user = userRepository.findByUserName(userName)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND, ""));
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ""));
         return user;
     }
 
@@ -57,7 +57,7 @@ public class UserService {
     public String login(String userName, String password) {
         UserEntity userEntity = userRepository.findByUserName(userName)
                 .orElseThrow(() ->
-                        new AppException(ErrorCode.USER_NOT_FOUND, String.format("userName을 확인해주세요")));
+                        new AppException(ErrorCode.USERNAME_NOT_FOUND, String.format("userName을 확인해주세요")));
 
         if(!encoder.matches(password, userEntity.getPassword())){
             throw new AppException(ErrorCode.INVALID_PASSWORD, String.format("password를 확인해주세요"));

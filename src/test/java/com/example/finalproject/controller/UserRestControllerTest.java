@@ -91,7 +91,7 @@ class UserRestControllerTest {
                 .build();
 
         // id, pw를 보내서
-        when(userService.login(any(), any())).thenThrow(new AppException(ErrorCode.USER_NOT_FOUND, ""));
+        when(userService.login(any(), any())).thenThrow(new AppException(ErrorCode.USERNAME_NOT_FOUND, ""));
 
         // NOT_FOUND를 받으면 잘 만든 것이다
         mockMvc.perform(post("/api/v1/users/login")
