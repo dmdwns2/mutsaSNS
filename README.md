@@ -10,7 +10,7 @@
 
 <br> <br> <br>
 
-## 주소
+## Swagger 주소
 http://ec2-13-230-162-7.ap-northeast-1.compute.amazonaws.com:8080/swagger-ui/
 
 <br> 
@@ -32,26 +32,43 @@ http://ec2-13-230-162-7.ap-northeast-1.compute.amazonaws.com:8080/swagger-ui/
 
 ## 👨‍👨‍👧‍👦 User
 
+endpoint : /api/v1/users
+
 <br> 
 
 > ### Join
-회원가입 기능 
+회원가입 기능
+
+endpoint : /api/v1/users/join [POST]
+
 방법 : userName과 password를 작성하면 db에 저장
 
 <br> <br> <br>
 
 > ### Login
 로그인 기능 
+
+endpoint : /api/v1/users/login [POST]
+
 방법 : 가입된 userName과 password를 작성하면 토큰을 반환
 
 <br> <br> <br>
 
 ## 📋 Post
 
+endpoint : /api/v1/posts
+
 <br> 
 
 > ### Get
 게시물 조회기능
+
+해당 id 조회
+endpoint : /api/v1/posts/{id} [GET]
+
+리스트 조회
+endpoint : /api/v1/posts [GET]
+
 id를 이용해 한건만 조회하는 기능과
 page형식으로 전체 list를 조회하는 기능
 로그인 하지 않아도 가능
@@ -64,6 +81,9 @@ page형식으로 전체 list를 조회하는 기능
 
 > ### Add
 게시물 등록기능
+
+endpoint : /api/v1/posts [POST]
+
 로그인 해야 이용할 수 있음
 방법 : title과 body에 제목과 내용을 입력
 
@@ -72,6 +92,9 @@ page형식으로 전체 list를 조회하는 기능
 
 > ### Put
 게시물 수정기능
+
+endpoint : /api/v1/posts/{id} [PUT]
+
 로그인 해야 이용할 수 있음
 자신이 작성한 글만 수정할 수 있음
 
@@ -81,6 +104,9 @@ page형식으로 전체 list를 조회하는 기능
 
 > ### Delete
 게시물 삭제기능
+
+endpoint : /api/v1/posts/{id} [DELETE]
+
 로그인 해야 이용할 수 있음
 자신이 작성한 글만 삭제할 수 있음
 
