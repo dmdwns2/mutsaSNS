@@ -5,6 +5,7 @@ import com.example.finalproject.domain.dto.PostAddRequest;
 import com.example.finalproject.domain.dto.PostAddResponse;
 import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.PostResponse;
+import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -24,16 +25,16 @@ public class PostRestController {
     private final PostService service;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PostDto> getPost(@PathVariable Long id) {
+    public Response<PostDto> getPost(@PathVariable Long id) {
         PostDto postDto = service.getPostById(id);
-        return ResponseEntity.ok().body(postDto);
+        return Response.success(postDto);
     }
 
     @PostMapping("")
-    public ResponseEntity<PostAddResponse> addPost(@RequestBody PostAddRequest postAddRequest, Authentication authentication) {
+    public Response<PostAddResponse> addPost(@RequestBody PostAddRequest postAddRequest, Authentication authentication) {
         String userName = authentication.getName();
         PostAddResponse response = service.add(postAddRequest, userName);
-        return ResponseEntity.ok().body(response);
+        return Response.success(response);
     }
 
 //    @PutMapping("/{id}")
@@ -45,7 +46,7 @@ public class PostRestController {
 //    }
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> list(Pageable pageable) {
-        return ResponseEntity.ok().body(service.findAllByPage(pageable));
+    public Response<List<PostResponse>> list(Pageable pageable) {
+        return Response.success(service.findAllByPage(pageable));
     }
 }
