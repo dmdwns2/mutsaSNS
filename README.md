@@ -14,13 +14,15 @@
 - 에디터 : Intellij Ultimate
 - 개발 툴 : SpringBoot 2.7.5
 - 자바 : JAVA 11
-- 빌드 : Gradle 6.8
-- 서버 : AWS EC2
+- 빌드 : Gradle 6.8 
+- 서버 : AWS EC2 사용
 - 배포 : Docker
-- 데이터베이스 : MySql 8.0
+- 데이터베이스 : MySql 8.0, RDS 사용
 - 필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security
+- Swagger 3.0.0 사용
+
 
 # ERD
 
 
-![ERD](/uploads/76d87dca71a6abf8f45bc6a19ed23a0d/ERD.png)
+![ERD](/uploads/025ebf46f1bae0e616bbcf179a437499/ERD.png)
