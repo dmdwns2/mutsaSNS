@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class PostResponse {
 
 
-    private final Long id;
+    private final Long postId;
     private final String title;
     private final String body;
     private final String userName;

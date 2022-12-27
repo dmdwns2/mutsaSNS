@@ -6,6 +6,6 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public class PostDelResponse {
-    private final Long id;
+    private final Long postId;
     private final String message;
 }
