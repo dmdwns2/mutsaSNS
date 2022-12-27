@@ -5,13 +5,11 @@ import com.example.finalproject.domain.dto.PostAddResponse;
 import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.security.core.Authentication;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -31,10 +29,13 @@ class PostRestControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    PostService articleService;
+    PostService postService;
 
     @Autowired
     ObjectMapper objectMapper;
+
+    private final String USERNAME = "messi";
+
 
 
     // GET /posts/1 로 조회시
@@ -43,8 +44,8 @@ class PostRestControllerTest {
     void ID조회_확인() throws Exception {
         Long id = 1l;
 
-        given(articleService.getPostById(id))
-                .willReturn(new PostDto(1l, "첫번째 글", "내용입니다.", any(), any(), any()));
+        given(postService.getPostById(id))
+                .willReturn(new PostDto(1l, "첫번째 글", "내용입니다.", USERNAME, any(), any()));
 
         mockMvc.perform(get("/api/v1/posts/1"))
                 .andExpect(status().isOk())
@@ -53,13 +54,13 @@ class PostRestControllerTest {
                 .andExpect(jsonPath("$.body").exists())
                 .andDo(print());
 
-        verify(articleService).getPostById(id);
+        verify(postService).getPostById(id);
     }
 
     @Test
     void ADD_동작_확인() throws Exception {
         PostAddRequest dto = new PostAddRequest("제목입니다.", "내용입니다.");
-        given(articleService.add(any(), any())).willReturn(new PostAddResponse(1l, dto.getTitle(), dto.getBody(), any(), "테스트"));
+        given(postService.add(any(), any())).willReturn(new PostAddResponse(1l, dto.getTitle(), dto.getBody(), any(), "테스트"));
 
         mockMvc.perform(post("/api/v1/posts")
                         .contentType(MediaType.APPLICATION_JSON)
