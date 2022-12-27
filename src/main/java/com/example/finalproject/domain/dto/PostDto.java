@@ -20,5 +20,5 @@ public class PostDto{
     private final String body;
     private final String userName;
     private final LocalDateTime createdAt;
-    private LocalDateTime lastModifiedAt;
+    private final LocalDateTime lastModifiedAt;
 }

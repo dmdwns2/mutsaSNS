@@ -15,11 +15,4 @@ public class PostPutRequest {
     private final String title;
     private final String body;
 
-    public PostEntity toEntity() {
-        PostEntity postEntity = PostEntity.builder()
-                .title(this.title)
-                .body(this.body)
-                .build();
-        return postEntity;
-    }
 }

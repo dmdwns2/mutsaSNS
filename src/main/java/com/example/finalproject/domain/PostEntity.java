@@ -34,6 +34,8 @@ public class PostEntity extends BaseEntity{
                 .title(this.title)
                 .body(this.body)
                 .userName(this.userName)
+                .createdAt(getCreatedAt())
+                .lastModifiedAt(getLastModifiedAt())
                 .build();
     }
 }

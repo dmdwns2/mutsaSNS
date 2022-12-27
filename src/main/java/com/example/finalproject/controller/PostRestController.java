@@ -5,6 +5,8 @@ import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +47,7 @@ public class PostRestController {
     }
 
     @GetMapping
-    public Response<List<PostResponse>> list(Pageable pageable) {
+    public Response<List<PostResponse>> list(@PageableDefault(size=20, sort="createdAt", direction = Sort.Direction.DESC) Pageable pageable) {
         return Response.success(service.findAllByPage(pageable));
     }
 }
