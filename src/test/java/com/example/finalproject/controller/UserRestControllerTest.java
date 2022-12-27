@@ -43,9 +43,8 @@ class UserRestControllerTest {
 
 
     @Test
-    @DisplayName("회원가입 성공")
     @WithMockUser
-    void join_success() throws Exception {
+    void 회원가입_성공() throws Exception {
         UserJoinRequest userJoinRequest = UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
@@ -62,9 +61,8 @@ class UserRestControllerTest {
     }
 
     @Test
-    @DisplayName("회원가입 실패")
     @WithMockUser
-    void join_fail() throws Exception {
+    void 회원가입_실패() throws Exception {
 
         UserJoinRequest userJoinRequest = UserJoinRequest.builder()
                 .userName("bappe")
@@ -82,9 +80,26 @@ class UserRestControllerTest {
     }
 
     @Test
+    @WithMockUser
+    void 로그인_성공() throws Exception {
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+                .userName("bappe")
+                .password("123qwe")
+                .build();
+
+//        when(userService.login(any(),any())).thenReturn();
+        mockMvc.perform(post("/api/v1/users/login")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(userJoinRequest)))
+                .andDo(print())
+                .andExpect(status().isOk());
+    }
+
+    @Test
     @DisplayName("로그인 실패 - id없음")
     @WithMockUser
-    void login_fail1() throws Exception {
+    void 로그인_실패() throws Exception {
         UserJoinRequest userJoinRequest = UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
