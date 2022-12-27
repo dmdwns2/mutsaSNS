@@ -51,6 +51,10 @@ public class PostService {
 
     public PostPutResponse update(Long id, PostPutRequest postPutRequest, String userName) {
         Optional<PostEntity> entity = this.repository.findById(id);
+        // 인증에서 받은 현재 로그인한 아이디와, id값에 존재하는 userName을 비교해야함.
+        if(entity.get().getUserName() != userName){
+            throw new IllegalArgumentException("본인의 게시물만 수정할 수 있습니다.");
+        }
         entity.ifPresent(t ->{
             // 내용이 널이 아니라면 엔티티의 객체를 바꿔준다.
             if(postPutRequest.getBody() != null) {
@@ -58,9 +62,6 @@ public class PostService {
             }
             if(postPutRequest.getTitle() != null) {
                 t.setTitle(postPutRequest.getTitle());
-            }
-            if(postPutRequest.getUserName() != userName){
-                throw new IllegalArgumentException("본인의 게시물만 수정할 수 있습니다.");
             }
             // 이걸 실행하면 idx 때문에 update가 실행됩니다.
             this.repository.save(t);
