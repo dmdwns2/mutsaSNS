@@ -36,13 +36,13 @@ public class PostRestController {
         return ResponseEntity.ok().body(response);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<PostAddResponse> putPost(@RequestBody PostAddRequest postAddRequest, @PathVariable Long id, Authentication authentication) {
-//        PostDto postDto = service.getPostById(id);
-        Optional<PostEntity> postDto = this.service.update(id, postAddRequest);
-
-        return new ResponseEntity(postDto, HttpStatus.OK);
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<PostAddResponse> putPost(@RequestBody PostAddRequest postAddRequest, @PathVariable Long id, Authentication authentication) {
+////        PostDto postDto = service.getPostById(id);
+//        Optional<PostEntity> postDto = this.service.update(id, postAddRequest);
+//
+//        return new ResponseEntity(postDto, HttpStatus.OK);
+//    }
 
     @GetMapping
     public ResponseEntity<List<PostResponse>> list(Pageable pageable) {

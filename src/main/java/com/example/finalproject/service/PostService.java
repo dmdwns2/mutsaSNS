@@ -51,7 +51,8 @@ public class PostService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<PostEntity> update(Long id, PostAddRequest postAddRequest) {
-
-    }
+//    public Optional<PostEntity> update(Long id, PostAddRequest postAddRequest) {
+////        Optional<PostEntity>
+//        return new PostAddResponse(get.);
+//    }
 }
