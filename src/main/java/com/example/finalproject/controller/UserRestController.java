@@ -27,7 +27,7 @@ public class UserRestController {
     @PostMapping("/login")
     public Response<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
         log.info("login 요청이 들어왔습니다.");
-        String token = service.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());
-        return Response.success(new UserLoginResponse(token));
+        String jwt = service.login(userLoginRequest.getUserName(), userLoginRequest.getPassword());
+        return Response.success(new UserLoginResponse(jwt));
     }
 }
