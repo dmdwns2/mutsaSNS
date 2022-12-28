@@ -51,7 +51,6 @@ class UserRestControllerTest {
                 .build();
 
         when(userService.join(any(),any())).thenReturn(mock(UserDto.class));
-
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -77,6 +76,7 @@ class UserRestControllerTest {
                         .content(objectMapper.writeValueAsBytes(userJoinRequest)))
                 .andDo(print())
                 .andExpect(status().isConflict());
+
     }
 
     @Test
@@ -113,8 +113,11 @@ class UserRestControllerTest {
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(userJoinRequest)))
+
                 .andDo(print())
                 .andExpect(status().isNotFound());
     }
 }
+
+// {$.~~} = 변수가 들어오는 것
 

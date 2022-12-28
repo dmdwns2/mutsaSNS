@@ -2,42 +2,44 @@ package com.example.finalproject.controller;
 
 import com.example.finalproject.domain.dto.PostAddRequest;
 import com.example.finalproject.domain.dto.PostAddResponse;
+import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.service.PostService;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.BDDMockito.given;
 
+@WebMvcTest(PostRestControllerTest.class)
 class PostRestControllerTest {
 
-    private static final String TITLE = "title";
-    private static final String BODY = "body";
-    private static final String USERNAME = "messi";
+    @Autowired
+    private MockMvc mockMvc;
 
+    @MockBean
+    PostService service;
 
-    private final PostService service;
-
-    public PostRestControllerTest(PostService service) {
-        this.service = service;
-    }
-
-
+    PostAddRequest request = new PostAddRequest("bye", "ya");
 
     // GET /posts/1 로 조회시
     //조회 성공 - id, title, body, userName 4가지 항목이 있는지 검증
     @Test
     void ID조회_확인() {
-
+        given(service.getPostById(1l)).willReturn(new PostDto(
+                1l, "hi", "hello", "me", null, null));
     }
 
     @Test
-    void ADD_동작_확인()  {
-        PostAddResponse addResult = service.add(new PostAddRequest(TITLE, BODY), USERNAME);
-        assertEquals(TITLE, addResult.getTitle());
-        assertEquals(BODY, addResult.getBody());
+    void ADD_동작_확인() {
+        given(service.add(request, "messi")).willReturn(new PostAddResponse(
+                1l,"bye","ya","messi","포스트 등록 완료"));
     }
 
     @Test
     void 작성_인증_실패_JWT를_Bearer_Token으로_보내지_않은_경우() {
+
     }
 
     @Test
