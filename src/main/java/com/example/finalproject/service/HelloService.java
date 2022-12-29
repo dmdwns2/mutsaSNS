@@ -1,4 +1,4 @@
-package com.example.finalproject.domain.dto;
+package com.example.finalproject.service;
 
 import org.springframework.stereotype.Service;
 

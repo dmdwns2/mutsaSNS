@@ -1,6 +1,6 @@
 package com.example.finalproject.controller;
 
-import com.example.finalproject.domain.dto.HelloService;
+import com.example.finalproject.service.HelloService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +21,8 @@ public class HelloController {
     }
 
     @GetMapping("/{num}")
-    public Integer num(@PathVariable Integer num){
-        return service.sumOfNum(num);
+    public ResponseEntity<String> num(@PathVariable Integer num){
+        return ResponseEntity.ok().body(service.sumOfNum(num).toString());
     }
 }
 
