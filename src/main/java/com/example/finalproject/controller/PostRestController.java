@@ -1,6 +1,12 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.domain.dto.PostDto;
+import com.example.finalproject.domain.dto.request.PostAddRequest;
+import com.example.finalproject.domain.dto.request.PostPutRequest;
+import com.example.finalproject.domain.dto.response.PostAddResponse;
+import com.example.finalproject.domain.dto.response.PostDelResponse;
+import com.example.finalproject.domain.dto.response.PostPutResponse;
+import com.example.finalproject.domain.dto.response.PostResponse;
 import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.PostService;
 import lombok.*;
@@ -10,8 +16,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @RestController
@@ -53,63 +57,4 @@ public class PostRestController {
         return Response.success(service.findAllByPage(pageable));
     }
 
-    /**
-     * Request, Response
-     */
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    public static class PostAddRequest {
-        private final String title;
-        private final String body;
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class PostAddResponse {
-        private final Long postId;
-        private final String title;
-        private final String body;
-        private final String userName;
-        private final String message;
-    }
-
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    public static class PostPutRequest {
-        private final String title;
-        private final String body;
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class PostPutResponse {
-        private final Long postId;
-        private final String title;
-        private final String body;
-        private final String userName;
-        private final String message;
-    }
-
-    @Builder
-    @AllArgsConstructor
-    @Getter
-    public static class PostResponse {
-        private final Long postId;
-        private final String title;
-        private final String body;
-        private final String userName;
-        private final LocalDateTime createdAt;
-        private LocalDateTime lastModifiedAt;
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class PostDelResponse {
-        private final Long postId;
-        private final String message;
-    }
 }

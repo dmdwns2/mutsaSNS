@@ -1,12 +1,13 @@
 package com.example.finalproject.controller;
 
+import com.example.finalproject.domain.dto.request.CommentAddRequest;
+import com.example.finalproject.domain.dto.response.CommentAddResponse;
+import com.example.finalproject.domain.dto.response.CommentResponse;
 import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.CommentService;
 import lombok.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @RestController
@@ -31,36 +32,6 @@ public class CommentController {
         String userName = authentication.getName();
         CommentAddResponse response = service.add(request, userName);
         return Response.success(response);
-    }
-
-    /**
-     * Request, Response
-     */
-    @Builder
-    @AllArgsConstructor
-    @Getter
-    public static class CommentResponse {
-
-        private final Long commentId;
-        private final String comment;
-        private final String userName;
-        private final LocalDateTime createdAt;
-        private LocalDateTime lastModifiedAt;
-
-    }
-    @Getter
-    @Setter
-    @AllArgsConstructor
-    @EqualsAndHashCode
-    public static class CommentAddRequest {
-        private final String comment;
-    }
-    @AllArgsConstructor
-    @Getter
-    public static class CommentAddResponse {
-        private final String comment;
-        private final String userName;
-        private final LocalDateTime createdAt;
     }
 
 }

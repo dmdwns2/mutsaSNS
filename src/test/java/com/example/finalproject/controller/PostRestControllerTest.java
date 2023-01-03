@@ -1,6 +1,8 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.domain.dto.PostDto;
+import com.example.finalproject.domain.dto.request.PostAddRequest;
+import com.example.finalproject.domain.dto.response.PostAddResponse;
 import com.example.finalproject.service.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +21,7 @@ class PostRestControllerTest {
     @MockBean
     PostService service;
 
-    PostRestController.PostAddRequest request = new PostRestController.PostAddRequest("bye", "ya");
+    PostAddRequest request = new PostAddRequest("bye", "ya");
 
     // GET /posts/1 로 조회시
     //조회 성공 - id, title, body, userName 4가지 항목이 있는지 검증
@@ -31,7 +33,7 @@ class PostRestControllerTest {
 
     @Test
     void ADD_동작_확인() {
-        given(service.add(request, "messi")).willReturn(new PostRestController.PostAddResponse(
+        given(service.add(request, "messi")).willReturn(new PostAddResponse(
                 1l,"bye","ya","messi","포스트 등록 완료"));
     }
 

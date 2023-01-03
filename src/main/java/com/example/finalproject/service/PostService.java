@@ -2,6 +2,12 @@ package com.example.finalproject.service;
 
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.dto.PostDto;
+import com.example.finalproject.domain.dto.request.PostAddRequest;
+import com.example.finalproject.domain.dto.request.PostPutRequest;
+import com.example.finalproject.domain.dto.response.PostAddResponse;
+import com.example.finalproject.domain.dto.response.PostDelResponse;
+import com.example.finalproject.domain.dto.response.PostPutResponse;
+import com.example.finalproject.domain.dto.response.PostResponse;
 import com.example.finalproject.repository.PostRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -11,8 +17,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import static com.example.finalproject.controller.PostRestController.*;
 
 @AllArgsConstructor
 @Service

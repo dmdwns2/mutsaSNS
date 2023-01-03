@@ -1,6 +1,6 @@
 package com.example.finalproject.domain;
 
-import com.example.finalproject.controller.CommentController;
+import com.example.finalproject.domain.dto.response.CommentResponse;
 import lombok.*;
 
 import javax.persistence.*;
@@ -22,14 +22,13 @@ public class CommentEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private CommentEntity post;
+    private PostEntity post;
 
-    private String userName;
+    @Column(columnDefinition = "TEXT", nullable = false)
     private String comment;
 
-
-    public static CommentController.CommentResponse of(CommentEntity commentEntity) {
-        return new CommentController.CommentResponse(commentEntity.getId(),
+    public static CommentResponse of(CommentEntity commentEntity) {
+        return new CommentResponse(commentEntity.getId(),
                 commentEntity.getUser().getUserName(),
                 commentEntity.getComment(),
                 commentEntity.getCreatedAt(),

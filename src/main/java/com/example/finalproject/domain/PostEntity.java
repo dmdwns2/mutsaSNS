@@ -1,12 +1,11 @@
 package com.example.finalproject.domain;
 
-import com.example.finalproject.controller.PostRestController;
 import com.example.finalproject.domain.dto.PostDto;
+import com.example.finalproject.domain.dto.response.PostResponse;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -22,14 +21,17 @@ public class PostEntity extends BaseEntity{
     private String body;
     private String userName;
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc") // 댓글 정렬
+    private List<CommentEntity> comments;
 
     public static PostDto of(PostEntity postEntity) {
         return new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getBody(),
                 postEntity.getUserName(), postEntity.getCreatedAt(), postEntity.getLastModifiedAt());
     }
 
-    public PostRestController.PostResponse toResponse() {
-        return PostRestController.PostResponse.builder()
+    public PostResponse toResponse() {
+        return PostResponse.builder()
                 .postId(this.id)
                 .title(this.title)
                 .body(this.body)
