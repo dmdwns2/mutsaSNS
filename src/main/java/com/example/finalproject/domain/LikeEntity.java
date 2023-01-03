@@ -1,7 +1,14 @@
 package com.example.finalproject.domain;
 
-import javax.persistence.*;
+import lombok.*;
 
+import javax.persistence.*;
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class LikeEntity extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

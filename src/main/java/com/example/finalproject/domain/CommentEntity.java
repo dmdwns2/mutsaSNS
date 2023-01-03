@@ -4,6 +4,9 @@ import com.example.finalproject.domain.dto.response.CommentResponse;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -24,8 +27,13 @@ public class CommentEntity extends BaseEntity {
     @JoinColumn(name = "post_id")
     private PostEntity post;
 
-    @Column(columnDefinition = "TEXT", nullable = false)
+    @NotNull
+    @NotBlank
+    @Size(min = 1, max = 255)
+    @Column(columnDefinition = "TEXT")
     private String comment;
+
+    private String userName;
 
     public static CommentResponse of(CommentEntity commentEntity) {
         return new CommentResponse(commentEntity.getId(),
@@ -35,5 +43,13 @@ public class CommentEntity extends BaseEntity {
                 commentEntity.getLastModifiedAt());
     }
 
+    public CommentResponse toResponse() {
+        return CommentResponse.builder()
+                .comment(this.comment)
+                .userName(this.user.getUserName())
+                .createdAt(getCreatedAt())
+                .build();
+
+    }
 }
 

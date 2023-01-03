@@ -1,9 +1,16 @@
 package com.example.finalproject.domain;
 
 import com.example.finalproject.enums.AlarmType;
+import lombok.*;
 
 import javax.persistence.*;
 
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity
 public class AlarmEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
