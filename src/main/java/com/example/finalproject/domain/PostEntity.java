@@ -1,7 +1,7 @@
 package com.example.finalproject.domain;
 
+import com.example.finalproject.controller.PostRestController;
 import com.example.finalproject.domain.dto.PostDto;
-import com.example.finalproject.domain.dto.PostResponse;
 import lombok.*;
 
 import javax.persistence.Entity;
@@ -28,8 +28,8 @@ public class PostEntity extends BaseEntity{
                 postEntity.getUserName(), postEntity.getCreatedAt(), postEntity.getLastModifiedAt());
     }
 
-    public PostResponse toResponse() {
-        return PostResponse.builder()
+    public PostRestController.PostResponse toResponse() {
+        return PostRestController.PostResponse.builder()
                 .postId(this.id)
                 .title(this.title)
                 .body(this.body)

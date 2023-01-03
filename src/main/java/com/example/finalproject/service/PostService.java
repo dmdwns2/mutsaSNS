@@ -1,8 +1,9 @@
 package com.example.finalproject.service;
 
 import com.example.finalproject.domain.PostEntity;
-import com.example.finalproject.domain.dto.*;
+import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.repository.PostRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -11,14 +12,13 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static com.example.finalproject.controller.PostRestController.*;
+
+@AllArgsConstructor
 @Service
 public class PostService {
 
     private final PostRepository repository;
-
-    public PostService(PostRepository repository) {
-        this.repository = repository;
-    }
 
     public PostDto getPostById(Long id) {
         Optional<PostEntity> optPost = repository.findById(id);
@@ -68,7 +68,7 @@ public class PostService {
                 "포스트 수정 완료");
     }
 
-    public PostDelResponse delete(Long id,String userName) {
+    public PostDelResponse delete(Long id, String userName) {
         Optional<PostEntity> entity = this.repository.findById(id);
         if(!entity.get().getUserName().equals(userName)){
             throw new IllegalArgumentException("본인의 게시물만 삭제할 수 있습니다.");
@@ -76,4 +76,6 @@ public class PostService {
         repository.deleteById(id);
         return new PostDelResponse(id, "포스트 삭제 완료");
     }
+
+
 }

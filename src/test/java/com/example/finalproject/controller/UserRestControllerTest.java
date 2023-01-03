@@ -1,7 +1,6 @@
 package com.example.finalproject.controller;
 
 import com.example.finalproject.domain.dto.UserDto;
-import com.example.finalproject.domain.dto.UserJoinRequest;
 import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
 import com.example.finalproject.service.PostService;
@@ -45,7 +44,7 @@ class UserRestControllerTest {
     @Test
     @WithMockUser
     void 회원가입_성공() throws Exception {
-        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
                 .build();
@@ -63,7 +62,7 @@ class UserRestControllerTest {
     @WithMockUser
     void 회원가입_실패() throws Exception {
 
-        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
                 .build();
@@ -82,7 +81,7 @@ class UserRestControllerTest {
     @Test
     @WithMockUser
     void 로그인_성공() throws Exception {
-        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
                 .build();
@@ -100,7 +99,7 @@ class UserRestControllerTest {
     @DisplayName("로그인 실패 - id없음")
     @WithMockUser
     void 로그인_실패() throws Exception {
-        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
                 .build();
