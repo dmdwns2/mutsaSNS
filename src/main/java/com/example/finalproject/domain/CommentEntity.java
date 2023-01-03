@@ -21,11 +21,11 @@ public class CommentEntity extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private UserEntity user;
+    private UserEntity userId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "post_id")
-    private PostEntity post;
+    private PostEntity postId;
 
     @NotNull
     @NotBlank
@@ -33,11 +33,9 @@ public class CommentEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    private String userName;
-
     public static CommentResponse of(CommentEntity commentEntity) {
         return new CommentResponse(commentEntity.getId(),
-                commentEntity.getUser().getUserName(),
+                commentEntity.getUserId().getUserName(),
                 commentEntity.getComment(),
                 commentEntity.getCreatedAt(),
                 commentEntity.getLastModifiedAt());
@@ -46,7 +44,7 @@ public class CommentEntity extends BaseEntity {
     public CommentResponse toResponse() {
         return CommentResponse.builder()
                 .comment(this.comment)
-                .userName(this.user.getUserName())
+                .userName(this.userId.getUserName())
                 .createdAt(getCreatedAt())
                 .build();
 

@@ -21,9 +21,9 @@ public class PostEntity extends BaseEntity{
     private String body;
     private String userName;
 
-    @OneToMany(mappedBy = "post", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @OrderBy("id asc") // 댓글 정렬
-    private List<CommentEntity> comment;
+    private List<CommentEntity> comments;
 
     public static PostDto of(PostEntity postEntity) {
         return new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getBody(),

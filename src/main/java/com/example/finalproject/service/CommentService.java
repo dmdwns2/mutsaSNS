@@ -2,6 +2,7 @@ package com.example.finalproject.service;
 
 import com.example.finalproject.domain.CommentEntity;
 import com.example.finalproject.domain.PostEntity;
+import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
 import com.example.finalproject.repository.CommentRepository;
@@ -45,15 +46,19 @@ public class CommentService {
      * @return
      */
     public CommentAddResponse add(CommentAddRequest request, String inputUserName, Long postId) {
-        Optional<PostEntity> postEntity = postRepository.findById(postId);
+        Optional<PostEntity> optPost = postRepository.findById(postId);
+        PostEntity postEntity = optPost.orElse(null);
+
+        Optional<UserEntity> optUser = userRepository.findByUserName(inputUserName);
+        UserEntity userEntity = optUser.orElse(null);
 
         CommentEntity commentEntity = CommentEntity.builder()
-                .post(postEntity.get())
                 .comment(request.getComment())
-                .userName(inputUserName)
+                .userId(userEntity)
+                .postId(postEntity)
                 .build();
         CommentEntity saveComment = commentRepository.save(commentEntity);
-        return new CommentAddResponse(saveComment.getComment(), saveComment.getUserName(), saveComment.getCreatedAt());
+        return new CommentAddResponse(saveComment.getComment(), saveComment.getUserId().getUserName(), saveComment.getCreatedAt());
     }
     /**
      * 댓글 수정

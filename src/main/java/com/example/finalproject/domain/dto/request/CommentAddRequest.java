@@ -1,14 +1,12 @@
 package com.example.finalproject.domain.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode
 public class CommentAddRequest {
-    private final String comment;
+    private String comment;
 }
