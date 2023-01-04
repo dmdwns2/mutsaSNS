@@ -5,13 +5,18 @@ import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
+import com.example.finalproject.domain.dto.response.CommentResponse;
 import com.example.finalproject.repository.CommentRepository;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -26,17 +31,18 @@ public class CommentService {
     private final UserRepository userRepository;
 
     /**
-     * 댓글 조회 리스트형식
+     * 댓글 조회 리스트형식 미완성
      */
-//    public Page<CommentResponse> findAllByPage(Pageable pageable, Long postId) {
-//        Optional<PostEntity> post = postRepository.findById(postId);
-//
-//        Page<CommentEntity> visits = commentRepository.findAllb(pageable);
-//
-//        return new PageImpl<>(visits.stream()
-//                .map(CommentEntity::toResponse)
-//                .collect(Collectors.toList()));
-//    }
+    public Page<CommentResponse> findAllByPage(Pageable pageable, Long postId) {
+        Optional<PostEntity> optPost = postRepository.findById(postId);
+        PostEntity post = optPost.orElse(null);
+
+        Page<CommentEntity> visits = commentRepository.findAll(pageable);
+
+        return new PageImpl<>(visits.stream()
+                .map(CommentEntity::toResponse)
+                .collect(Collectors.toList()));
+    }
 
     /**
      * 댓글 작성
@@ -64,11 +70,17 @@ public class CommentService {
      * 댓글 수정
      */
 //    public CommentAddResponse update(CommentAddRequest request, String userName, Long postId) {
-//        Optional<PostEntity> postEntity = postRepository.findById(postId);
-//        if(postEntity.get().getUserName().equals(userName)){
-//            throw new IllegalArgumentException("");
+//        Optional<PostEntity> optPost = postRepository.findById(postId);
+//
+//        if(!optPost.get().getUserName().equals(userName)){
+//            throw new IllegalArgumentException("본인의 댓글만 수정할 수 있습니다.");
 //        }
-//        postEntity.get().setUserName();
+//        optPost.ifPresent(t ->{
+//            // 내용이 널이 아니라면 엔티티의 객체를 바꿔준다.
+//            if(request.getComment() != null) {
+//                t.getComments().get().setComment(request.getComment());
+//            }
+//        postEntity..setUserName();
 //        return new CommentAddResponse(saveComment.getComment(), saveComment.getUserName(), saveComment.getCreatedAt());
 //    }
 

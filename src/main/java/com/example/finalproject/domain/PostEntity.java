@@ -4,8 +4,9 @@ import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.response.PostResponse;
 import lombok.*;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Getter
 @Setter
@@ -21,9 +22,9 @@ public class PostEntity extends BaseEntity{
     private String body;
     private String userName;
 
-    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    @OrderBy("id asc") // 댓글 정렬
-    private List<CommentEntity> comments;
+//    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+//    @OrderBy("id asc") // 댓글 정렬
+//    private List<CommentEntity> comments;
 
     public static PostDto of(PostEntity postEntity) {
         return new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getBody(),

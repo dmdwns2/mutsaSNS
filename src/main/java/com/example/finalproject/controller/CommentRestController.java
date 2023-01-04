@@ -2,16 +2,21 @@ package com.example.finalproject.controller;
 
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
+import com.example.finalproject.domain.dto.response.CommentResponse;
 import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.CommentService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/posts")
-public class CommentController {
+public class CommentRestController {
 
 
     private final CommentService service;
@@ -19,14 +24,14 @@ public class CommentController {
     /**
      * 댓글 조회, 작성 , 수정, 삭제
      */
-//    @GetMapping("/{id}/comments")
-//    public Response<Page<CommentResponse>> getComment(
-//            @PageableDefault(size = 10, sort = "createdAt",
-//                    direction = Sort.Direction.DESC) Pageable pageable,
-//            @PathVariable Long id) {
-//
-//        return Response.success(service.findAllByPage(pageable,id));
-//    }
+    @GetMapping("/{id}/comments")
+    public Response<Page<CommentResponse>> getComment(
+            @PageableDefault(size = 10, sort = "createdAt",
+                    direction = Sort.Direction.DESC) Pageable pageable,
+            @PathVariable Long postId) {
+
+        return Response.success(service.findAllByPage(pageable,postId));
+    }
 
     // 댓글 작성
     @PostMapping("/{id}/comments")

@@ -35,10 +35,10 @@ public class CommentEntity extends BaseEntity {
 
     public static CommentResponse of(CommentEntity commentEntity) {
         return new CommentResponse(commentEntity.getId(),
-                commentEntity.getUserId().getUserName(),
                 commentEntity.getComment(),
-                commentEntity.getCreatedAt(),
-                commentEntity.getLastModifiedAt());
+                commentEntity.getUserId().getUserName(),
+                commentEntity.getPostId().getId(),
+                commentEntity.getCreatedAt());
     }
 
     public CommentResponse toResponse() {
