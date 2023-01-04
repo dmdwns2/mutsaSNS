@@ -58,7 +58,7 @@ public class CommentService {
                 .postId(postEntity)
                 .build();
         CommentEntity saveComment = commentRepository.save(commentEntity);
-        return new CommentAddResponse(saveComment.getComment(), saveComment.getUserId().getUserName(), saveComment.getCreatedAt());
+        return new CommentAddResponse(saveComment.getId(), saveComment.getComment(), saveComment.getUserId().getUserName(), saveComment.getPostId().getId(), saveComment.getCreatedAt());
     }
     /**
      * 댓글 수정
