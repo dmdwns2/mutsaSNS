@@ -24,7 +24,7 @@ public class CommentRestController {
     /**
      * 댓글 조회, 작성 , 수정, 삭제
      */
-    @GetMapping("/{id}/comments")
+    @GetMapping("/{postId}/comments")
     public Response<Page<CommentResponse>> getComment(
             @PageableDefault(size = 10, sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable,
