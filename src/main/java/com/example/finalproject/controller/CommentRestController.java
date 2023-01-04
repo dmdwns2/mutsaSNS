@@ -34,13 +34,13 @@ public class CommentRestController {
     }
 
     // 댓글 작성
-    @PostMapping("/{id}/comments")
+    @PostMapping("/{postId}/comments")
     public Response<CommentAddResponse> postComment(
             @RequestBody CommentAddRequest request,
-            Authentication authentication, @PathVariable Long id) {
+            Authentication authentication, @PathVariable Long postId) {
 
         String userName = authentication.getName();
-        CommentAddResponse response = service.add(request, userName, id);
+        CommentAddResponse response = service.add(request, userName, postId);
         return Response.success(response);
     }
 
