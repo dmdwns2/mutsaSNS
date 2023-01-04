@@ -34,7 +34,7 @@ public class CommentService {
      * 댓글 조회 리스트형식 미완성
      */
     public Page<CommentResponse> findAllByPage(Pageable pageable, Long postId) {
-        Page<CommentEntity> visits = commentRepository.findByPostId(postId, pageable);
+        Page<CommentEntity> visits = commentRepository.findCommentEntitiesByPostId(postId, pageable);
 
         return new PageImpl<>(visits.stream()
                 .map(CommentEntity::toResponse)
