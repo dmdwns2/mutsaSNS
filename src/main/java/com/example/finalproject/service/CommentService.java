@@ -6,6 +6,8 @@ import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
+import com.example.finalproject.exception.AppException;
+import com.example.finalproject.exception.ErrorCode;
 import com.example.finalproject.repository.CommentRepository;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
@@ -32,8 +34,10 @@ public class CommentService {
 
     /**
      * 댓글 조회 리스트형식 미완성
+     * 포스트가 없을 때
      */
     public Page<CommentResponse> findAllByPage(Pageable pageable, PostEntity postId) {
+
         Page<CommentEntity> visits = commentRepository.findCommentEntitiesByPostId(postId, pageable);
         return new PageImpl<>(visits.stream()
                 .map(CommentEntity::toResponse)
@@ -79,5 +83,12 @@ public class CommentService {
 //        postEntity..setUserName();
 //        return new CommentAddResponse(saveComment.getComment(), saveComment.getUserName(), saveComment.getCreatedAt());
 //    }
-
+    public void validate(PostEntity postId){
+        postRepository.findById(postId.getId()).orElseThrow(
+                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));;
+    }
+    public void validate(Long postId){
+        postRepository.findById(postId).orElseThrow(
+                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));;
+    }
 }

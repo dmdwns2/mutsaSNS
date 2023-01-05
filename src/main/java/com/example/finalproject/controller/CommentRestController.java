@@ -30,7 +30,7 @@ public class CommentRestController {
             @PageableDefault(sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable,
             @PathVariable PostEntity postId) {
-
+        service.validate(postId);
         return Response.success(service.findAllByPage(pageable,postId));
     }
 
@@ -39,7 +39,7 @@ public class CommentRestController {
     public Response<CommentAddResponse> postComment(
             @RequestBody CommentAddRequest request,
             Authentication authentication, @PathVariable Long postId) {
-
+        service.validate(postId);
         String userName = authentication.getName();
         CommentAddResponse response = service.add(request, userName, postId);
         return Response.success(response);
