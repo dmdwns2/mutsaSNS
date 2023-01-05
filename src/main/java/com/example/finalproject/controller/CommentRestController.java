@@ -1,5 +1,6 @@
 package com.example.finalproject.controller;
 
+import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
@@ -26,9 +27,9 @@ public class CommentRestController {
      */
     @GetMapping("/{postId}/comments")
     public Response<Page<CommentResponse>> getComment(
-            @PageableDefault(size = 10, sort = "createdAt",
+            @PageableDefault(sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable,
-            @PathVariable Long postId) {
+            @PathVariable PostEntity postId) {
 
         return Response.success(service.findAllByPage(pageable,postId));
     }
