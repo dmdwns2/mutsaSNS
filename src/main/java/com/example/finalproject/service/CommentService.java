@@ -99,19 +99,22 @@ public class CommentService {
                 optComment.get().getPostId().getId(),optComment.get().getCreatedAt(),optComment.get().getLastModifiedAt());
     }
 
-    public void postValidate(PostEntity postId) {
-        if(postRepository.findById(postId.getId()).get().getUserName().isEmpty())
-            throw new AppException(ErrorCode.POST_NOT_FOUND, "");
+    public PostEntity postValidate(PostEntity postId) {
+        return postRepository.findById(postId.getId()).orElseThrow(() -> {
+            throw new AppException(ErrorCode.POST_NOT_FOUND, "해당 게시물이 없습니다.");
+        });
     }
 
-    public void postValidate(Long postId) {
-        if(postRepository.findById(postId).get().getUserName().isEmpty())
-                throw new AppException(ErrorCode.POST_NOT_FOUND, "");
+    public PostEntity postValidate(Long postId) {
+        return postRepository.findById(postId).orElseThrow(() -> {
+            throw new AppException(ErrorCode.POST_NOT_FOUND, "해당 게시물이 없습니다.");
+        });
     }
 
-    public void commentValidate(Long id) {
-        if(commentRepository.findById(id).get().getUserId().getUserName().isEmpty())
-        throw new AppException(ErrorCode.POST_NOT_FOUND, "");
+    public CommentEntity commentValidate(Long id) {
+        return commentRepository.findById(id).orElseThrow(() -> {
+            throw new AppException(ErrorCode.COMMENT_NOT_FOUND, "해당 댓글이 없습니다.");
+        });
     }
 
 }
