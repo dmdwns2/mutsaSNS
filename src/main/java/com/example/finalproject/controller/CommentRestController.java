@@ -32,16 +32,14 @@ public class CommentRestController {
             @PageableDefault(sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable,
             @PathVariable PostEntity postId) {
-        service.validate(postId);
         return Response.success(service.findAllByPage(pageable,postId));
     }
 
     // 댓글 작성
     @PostMapping("/{postId}/comments")
-    public Response<CommentAddResponse> postComment(
-            @RequestBody CommentAddRequest request,
-            Authentication authentication, @PathVariable Long postId) {
-        service.validate(postId);
+    public Response<CommentAddResponse> postComment(@RequestBody CommentAddRequest request,
+                                                    Authentication authentication, @PathVariable Long postId) {
+
         String userName = authentication.getName();
         CommentAddResponse response = service.add(request, userName, postId);
         return Response.success(response);
@@ -52,7 +50,7 @@ public class CommentRestController {
     public Response<CommentPutResponse> updateComment(@RequestBody CommentPutRequest request,
                                                       @PathVariable Long postId, @PathVariable Long id,
                                                       Authentication authentication) {
-        service.validate(postId);
+
         String userName = authentication.getName();
         CommentPutResponse response = service.update(request, userName, postId, id);
         return Response.success(response);

@@ -39,7 +39,7 @@ public class CommentService {
      * 포스트가 없을 때
      */
     public Page<CommentResponse> findAllByPage(Pageable pageable, PostEntity postId) {
-
+        postValidate(postId);
         Page<CommentEntity> visits = commentRepository.findCommentEntitiesByPostId(postId, pageable);
         return new PageImpl<>(visits.stream()
                 .map(CommentEntity::toResponse)
@@ -55,6 +55,8 @@ public class CommentService {
      * @return
      */
     public CommentAddResponse add(CommentAddRequest request, String inputUserName, Long postId) {
+        postValidate(postId);
+
         Optional<PostEntity> optPost = postRepository.findById(postId);
         PostEntity postEntity = optPost.orElse(null);
 
@@ -74,11 +76,12 @@ public class CommentService {
      * 댓글 수정
      */
     public CommentPutResponse update(CommentPutRequest request, String userName, Long postId, Long id) {
+        postValidate(postId);
+        commentValidate(id);
+
         Optional<PostEntity> optPost = postRepository.findById(postId);
         Optional<CommentEntity> optComment = commentRepository.findById(id);
-        //Error 처리
-        commentRepository.findById(id)
-                .orElseThrow(() -> new AppException(ErrorCode.COMMENT_NOT_FOUND, ""));
+
         if(!optPost.get().getId().equals(optComment.get().getPostId().getId())){
             throw new IllegalArgumentException("게시물 ID를 확인해주세요");
         }
@@ -96,17 +99,19 @@ public class CommentService {
                 optComment.get().getPostId().getId(),optComment.get().getCreatedAt(),optComment.get().getLastModifiedAt());
     }
 
-    public void validate(PostEntity postId) {
-        postRepository.findById(postId.getId()).orElseThrow(
-                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));
-        ;
+    public void postValidate(PostEntity postId) {
+        if(postRepository.findById(postId.getId()).get().getUserName().isEmpty())
+            throw new AppException(ErrorCode.POST_NOT_FOUND, "");
     }
 
-    public void validate(Long postId) {
-        postRepository.findById(postId).orElseThrow(
-                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));
-        ;
+    public void postValidate(Long postId) {
+        if(postRepository.findById(postId).get().getUserName().isEmpty())
+                throw new AppException(ErrorCode.POST_NOT_FOUND, "");
     }
 
+    public void commentValidate(Long id) {
+        if(commentRepository.findById(id).get().getUserId().getUserName().isEmpty())
+        throw new AppException(ErrorCode.POST_NOT_FOUND, "");
+    }
 
 }
