@@ -76,7 +76,7 @@ public class CommentService {
     public CommentPutResponse update(CommentPutRequest request, String userName, Long postId, Long id) {
         Optional<PostEntity> optPost = postRepository.findById(postId);
         Optional<CommentEntity> optComment = commentRepository.findById(id);
-        // Error 처리
+        //Error 처리
         commentRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.COMMENT_NOT_FOUND, ""));
         if(!optPost.get().getId().equals(optComment.get().getPostId().getId())){
