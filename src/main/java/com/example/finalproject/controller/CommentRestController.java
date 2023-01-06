@@ -2,7 +2,9 @@ package com.example.finalproject.controller;
 
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
+import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
+import com.example.finalproject.domain.dto.response.CommentPutResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
 import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.CommentService;
@@ -42,6 +44,17 @@ public class CommentRestController {
         service.validate(postId);
         String userName = authentication.getName();
         CommentAddResponse response = service.add(request, userName, postId);
+        return Response.success(response);
+    }
+
+    //댓글 수정
+    @PutMapping("/{postId}/comments/{id}")
+    public Response<CommentPutResponse> updateComment(@RequestBody CommentPutRequest request,
+                                                      @PathVariable Long postId, @PathVariable Long id,
+                                                      Authentication authentication) {
+        service.validate(postId);
+        String userName = authentication.getName();
+        CommentPutResponse response = service.update(request, userName, postId, id);
         return Response.success(response);
     }
 

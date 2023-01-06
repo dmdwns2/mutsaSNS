@@ -4,7 +4,9 @@ import com.example.finalproject.domain.CommentEntity;
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
+import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
+import com.example.finalproject.domain.dto.response.CommentPutResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
 import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
@@ -46,6 +48,7 @@ public class CommentService {
 
     /**
      * 댓글 작성
+     *
      * @param request
      * @param inputUserName
      * @param postId
@@ -66,29 +69,41 @@ public class CommentService {
         CommentEntity saveComment = commentRepository.save(commentEntity);
         return new CommentAddResponse(saveComment.getId(), saveComment.getComment(), saveComment.getUserId().getUserName(), saveComment.getPostId().getId(), saveComment.getCreatedAt());
     }
+
     /**
      * 댓글 수정
      */
-//    public CommentAddResponse update(CommentAddRequest request, String userName, Long postId) {
-//        Optional<PostEntity> optPost = postRepository.findById(postId);
-//
-//        if(!optPost.get().getUserName().equals(userName)){
-//            throw new IllegalArgumentException("본인의 댓글만 수정할 수 있습니다.");
-//        }
-//        optPost.ifPresent(t ->{
-//            // 내용이 널이 아니라면 엔티티의 객체를 바꿔준다.
-//            if(request.getComment() != null) {
-//                t.getComments().get().setComment(request.getComment());
-//            }
-//        postEntity..setUserName();
-//        return new CommentAddResponse(saveComment.getComment(), saveComment.getUserName(), saveComment.getCreatedAt());
-//    }
-    public void validate(PostEntity postId){
+    public CommentPutResponse update(CommentPutRequest request, String userName, Long postId, Long id) {
+        Optional<PostEntity> optPost = postRepository.findById(postId);
+        Optional<CommentEntity> optComment = commentRepository.findById(id);
+        if(!optPost.get().getId().equals(optComment.get().getPostId().getId())){
+            throw new IllegalArgumentException("게시물 ID를 확인해주세요");
+        }
+        if(!optComment.get().getUserId().getUserName().equals(userName)){
+            throw new IllegalArgumentException("본인의 댓글만 수정할 수 있습니다.");
+        }
+        optComment.ifPresent(t -> {
+            if(request.getComment() != null) {
+                t.setComment(request.getComment());
+            }
+            this.commentRepository.save(t);
+        });
+
+        return new CommentPutResponse(optComment.get().getId(),optComment.get().getComment(),optComment.get().getUserId().getUserName(),
+                optComment.get().getPostId().getId(),optComment.get().getCreatedAt(),optComment.get().getLastModifiedAt());
+    }
+
+    public void validate(PostEntity postId) {
         postRepository.findById(postId.getId()).orElseThrow(
-                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));;
+                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));
+        ;
     }
-    public void validate(Long postId){
+
+    public void validate(Long postId) {
         postRepository.findById(postId).orElseThrow(
-                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));;
+                () -> new AppException(ErrorCode.POST_NOT_FOUND, ""));
+        ;
     }
+
+
 }

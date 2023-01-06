@@ -1,8 +1,5 @@
 package com.example.finalproject.service;
 
-import com.example.finalproject.domain.CommentEntity;
-import com.example.finalproject.domain.PostEntity;
-import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.repository.CommentRepository;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
@@ -28,21 +25,22 @@ class CommentServiceTest {
     @Test
     @DisplayName("조회 성공")
     void postGet_success() {
-        UserEntity user = mock(UserEntity.class);
-        PostEntity post = mock(PostEntity.class);
-
-        //test데이터
-        CommentEntity commentEntity = CommentEntity.builder()
-                .postId(post)
-                .comment("댓글")
-                .userId(user)
-                .id(1l)
-                .build();
-
-//        when(commentRepository.findById(post.getId())).thenReturn(Optional.of(commentEntity));
-//        CommentResponse commentResponse = service.();
+//        UserEntity user = mock(UserEntity.class);
+//        PostEntity post = mock(PostEntity.class);
+//        Pageable pageable = mock(Pageable.class);
 //
-//        Assertions.assertEquals(commentResponse.getUserName(), post.getUser().getUserName());
+//        //test데이터
+//        CommentEntity commentEntity = CommentEntity.builder()
+//                .postId(post)
+//                .comment("댓글")
+//                .userId(user)
+//                .id(1l)
+//                .build();
+//
+//        Page<CommentEntity> visits = commentRepository.findCommentEntitiesByPostId(post, pageable);
+//        when(commentRepository.findCommentEntitiesByPostId(post, pageable)).thenReturn(visits);
+//        System.out.println(visits);
+//        Assertions.assertEquals(commentEntity.getComment(), visits.get);
     }
     @Test
     void add() {
