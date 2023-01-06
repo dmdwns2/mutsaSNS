@@ -8,6 +8,7 @@ import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
 import com.example.finalproject.domain.dto.response.CommentPutResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
+import com.example.finalproject.domain.response.CommentDelResponse;
 import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
 import com.example.finalproject.repository.CommentRepository;
@@ -97,6 +98,28 @@ public class CommentService {
 
         return new CommentPutResponse(optComment.get().getId(),optComment.get().getComment(),optComment.get().getUserId().getUserName(),
                 optComment.get().getPostId().getId(),optComment.get().getCreatedAt(),optComment.get().getLastModifiedAt());
+    }
+
+    /**
+     * 댓글 삭제
+     * @param postId, id
+     * @return
+     */
+    public CommentDelResponse delete(Long postId, Long id, String userName){
+        postValidate(postId);
+        commentValidate(id);
+        Optional<PostEntity> optPost = postRepository.findById(postId);
+        Optional<CommentEntity> optComment = commentRepository.findById(id);
+
+        if(!optComment.get().getUserId().getUserName().equals(userName)){
+            throw new IllegalArgumentException("본인의 댓글만 삭제할 수 있습니다.");
+        }
+        if(!optPost.get().getId().equals(optComment.get().getPostId().getId())){
+            throw new IllegalArgumentException("게시물 ID과 댓글 ID가 일치하지 않습니다.");
+        }
+
+        commentRepository.deleteById(id);
+        return new CommentDelResponse("댓글 삭제 완료", id);
     }
 
     public PostEntity postValidate(PostEntity postId) {

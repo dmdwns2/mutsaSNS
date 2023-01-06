@@ -6,6 +6,7 @@ import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
 import com.example.finalproject.domain.dto.response.CommentPutResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
+import com.example.finalproject.domain.response.CommentDelResponse;
 import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.CommentService;
 import lombok.AllArgsConstructor;
@@ -53,6 +54,14 @@ public class CommentRestController {
 
         String userName = authentication.getName();
         CommentPutResponse response = service.update(request, userName, postId, id);
+        return Response.success(response);
+    }
+
+    @DeleteMapping("/{postId}/comments/{id}")
+    public Response<CommentDelResponse> deleteComment(@PathVariable Long postId, @PathVariable Long id,
+                                                      Authentication authentication) {
+        String userName = authentication.getName();
+        CommentDelResponse response = service.delete(postId, id, userName);
         return Response.success(response);
     }
 

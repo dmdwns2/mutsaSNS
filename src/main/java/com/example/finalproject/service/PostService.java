@@ -73,7 +73,7 @@ public class PostService {
     }
 
     public PostDelResponse delete(Long id, String userName) {
-        Optional<PostEntity> entity = this.repository.findById(id);
+        Optional<PostEntity> entity = repository.findById(id);
         if(!entity.get().getUserName().equals(userName)){
             throw new IllegalArgumentException("본인의 게시물만 삭제할 수 있습니다.");
         }
