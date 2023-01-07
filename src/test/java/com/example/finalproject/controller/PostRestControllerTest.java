@@ -27,8 +27,14 @@ class PostRestControllerTest {
     //조회 성공 - id, title, body, userName 4가지 항목이 있는지 검증
     @Test
     void ID조회_확인() {
+
+        //given
         given(service.getPostById(1l)).willReturn(new PostDto(
                 1l, "hi", "hello", "me", null, null));
+
+        //when
+
+        //then
     }
 
     @Test

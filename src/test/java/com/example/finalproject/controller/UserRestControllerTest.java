@@ -15,15 +15,17 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.example.finalproject.controller.UserRestController.UserJoinRequest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest
+@WebMvcTest(UserRestController.class)
 class UserRestControllerTest {
 
     @Autowired
@@ -40,16 +42,17 @@ class UserRestControllerTest {
     ObjectMapper objectMapper;
 
 
-
     @Test
     @WithMockUser
     void 회원가입_성공() throws Exception {
-        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
-                .userName("bappe")
-                .password("123qwe")
+        //given
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+                .userName("mbappe")
+                .password("123")
                 .build();
-
-        when(userService.join(any(),any())).thenReturn(mock(UserDto.class));
+        //when
+        when(userService.join(any(), any())).thenReturn(mock(UserDto.class));
+        //then
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -61,14 +64,14 @@ class UserRestControllerTest {
     @Test
     @WithMockUser
     void 회원가입_실패() throws Exception {
-
-        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
+        //given
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
                 .build();
-
-        when(userService.join(any(),any())).thenThrow(new AppException(ErrorCode.DUPLICATED_USER_NAME, ""));
-
+        //given
+        when(userService.join(any(), any())).thenThrow(new AppException(ErrorCode.DUPLICATED_USER_NAME, ""));
+        //then
         mockMvc.perform(post("/api/v1/users/join")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
@@ -81,17 +84,21 @@ class UserRestControllerTest {
     @Test
     @WithMockUser
     void 로그인_성공() throws Exception {
-        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
+        //given
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
                 .build();
-
-//        when(userService.login(any(),any())).thenReturn();
+        //when
+        when(userService.login(any(), any())).thenReturn("token");
+        //then
         mockMvc.perform(post("/api/v1/users/login")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(userJoinRequest)))
                 .andDo(print())
+                .andExpect(jsonPath("$.resultCode").exists())
+                .andExpect(jsonPath("$.result.jwt").exists())
                 .andExpect(status().isOk());
     }
 
@@ -99,22 +106,42 @@ class UserRestControllerTest {
     @DisplayName("로그인 실패 - id없음")
     @WithMockUser
     void 로그인_실패() throws Exception {
-        UserRestController.UserJoinRequest userJoinRequest = UserRestController.UserJoinRequest.builder()
+        //given
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
                 .userName("bappe")
                 .password("123qwe")
                 .build();
-
-        // id, pw를 보내서
+        // when
         when(userService.login(any(), any())).thenThrow(new AppException(ErrorCode.USERNAME_NOT_FOUND, ""));
 
-        // NOT_FOUND를 받으면 잘 만든 것이다
+        // then
         mockMvc.perform(post("/api/v1/users/login")
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(userJoinRequest)))
-
                 .andDo(print())
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @DisplayName("로그인 실패 - 비밀번호 틀림")
+    @WithMockUser
+    void 로그인_실패_비밀번호() throws Exception {
+        //given
+        UserJoinRequest userJoinRequest = UserJoinRequest.builder()
+                .userName("bappe")
+                .password("123qwe")
+                .build();
+        // when
+        when(userService.login(any(), any())).thenThrow(new AppException(ErrorCode.INVALID_PASSWORD, ""));
+
+        // then
+        mockMvc.perform(post("/api/v1/users/login")
+                        .with(csrf())
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsBytes(userJoinRequest)))
+                .andDo(print())
+                .andExpect(status().is(ErrorCode.INVALID_PASSWORD.getStatus().value()));
     }
 }
 
