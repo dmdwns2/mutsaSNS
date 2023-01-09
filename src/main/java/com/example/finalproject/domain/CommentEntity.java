@@ -33,14 +33,6 @@ public class CommentEntity extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String comment;
 
-    public static CommentResponse of(CommentEntity commentEntity) {
-        return new CommentResponse(commentEntity.getId(),
-                commentEntity.getComment(),
-                commentEntity.getUserId().getUserName(),
-                commentEntity.getPostId().getId(),
-                commentEntity.getCreatedAt());
-    }
-
     public CommentResponse toResponse() {
         return CommentResponse.builder()
                 .commentId(this.id)
