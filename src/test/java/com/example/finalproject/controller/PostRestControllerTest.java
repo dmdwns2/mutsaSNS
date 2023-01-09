@@ -4,13 +4,24 @@ import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.request.PostAddRequest;
 import com.example.finalproject.domain.dto.response.PostAddResponse;
 import com.example.finalproject.service.PostService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(PostRestControllerTest.class)
 class PostRestControllerTest {
@@ -21,26 +32,59 @@ class PostRestControllerTest {
     @MockBean
     PostService service;
 
-    PostAddRequest request = new PostAddRequest("bye", "ya");
+    @Autowired
+    ObjectMapper objectMapper;
 
     // GET /posts/1 로 조회시
     //조회 성공 - id, title, body, userName 4가지 항목이 있는지 검증
     @Test
-    void ID조회_확인() {
+    @WithMockUser
+    void ID조회_확인() throws Exception {
 
         //given
-        given(service.getPostById(1l)).willReturn(new PostDto(
-                1l, "hi", "hello", "me", null, null));
+        PostDto dto = PostDto.builder()
+                .id(1L)
+                .title("hi")
+                .body("hello")
+                .userName("messi")
+                .build();
+
+        //when
+        when(service.getPostById(any())).thenReturn(dto);
+
+        //then
+        mockMvc.perform(get("/api/v1/posts/1")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(dto)))
+                .andExpect(jsonPath("$.result.id").exists())
+                .andExpect(jsonPath("$.result.title").exists())
+                .andExpect(jsonPath("$.result.body").exists())
+                .andExpect(jsonPath("$.result.userName").exists())
+                .andExpect(status().isOk())
+                .andDo(print());
+    }
+
+    @Test
+    void ADD_동작_확인() throws Exception{
+
+        //given
+        PostAddRequest request = new PostAddRequest("hi","hello");
+        given(service.add(any(),any())).willReturn(new PostAddResponse(1L,"hi","hello",any(),any()));
 
         //when
 
         //then
-    }
+        mockMvc.perform(post("/api/v1/posts")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(request)))
+                .andExpect(jsonPath("$.result.title").exists())
+                .andExpect(jsonPath("$.result.body").exists())
+                .andExpect(status().isOk())
+                .andDo(print());
 
-    @Test
-    void ADD_동작_확인() {
-        given(service.add(request, "messi")).willReturn(new PostAddResponse(
-                1l,"bye","ya","messi","포스트 등록 완료"));
+
     }
 
     @Test
