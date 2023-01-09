@@ -16,7 +16,7 @@ import java.util.List;
 @Entity
 public class UserEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
     private String userName;
     private String password;

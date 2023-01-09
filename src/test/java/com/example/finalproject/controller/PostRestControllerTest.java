@@ -14,7 +14,6 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -66,14 +65,13 @@ class PostRestControllerTest {
     }
 
     @Test
+    @WithMockUser
     void ADD_동작_확인() throws Exception{
 
         //given
         PostAddRequest request = new PostAddRequest("hi","hello");
-        given(service.add(any(),any())).willReturn(new PostAddResponse(1L,"hi","hello",any(),any()));
-
         //when
-
+        when(service.add(any(),any())).thenReturn(PostAddResponse.builder().postId(1L).build());
         //then
         mockMvc.perform(post("/api/v1/posts")
                 .with(csrf())

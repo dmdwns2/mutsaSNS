@@ -7,7 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDateTime;
 
@@ -16,7 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class CommentDto{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private final Long id;
     private final String comment;
     private final LocalDateTime createdAt;
