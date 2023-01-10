@@ -4,16 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import java.time.LocalDateTime;
 
 @Getter
 @Builder
 @AllArgsConstructor
 public class PostDto{
-    @Id
-    @GeneratedValue
     private final Long id;
     private final String title;
     private final String body;

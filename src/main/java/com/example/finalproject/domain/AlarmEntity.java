@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 public class AlarmEntity extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // 알람을 받은 사람
