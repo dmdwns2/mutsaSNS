@@ -4,6 +4,8 @@ import com.example.finalproject.enums.UserRole;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Builder
@@ -13,10 +15,19 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 public class UserEntity {
+
+    @NotBlank
+    @NotNull
     @Id
     @GeneratedValue
     private Long id;
+
+    @NotBlank
+    @NotNull
     private String userName;
+
+    @NotBlank
+    @NotNull
     private String password;
 
     @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)

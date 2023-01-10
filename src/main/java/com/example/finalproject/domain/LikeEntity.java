@@ -3,6 +3,7 @@ package com.example.finalproject.domain;
 import lombok.*;
 
 import javax.persistence.*;
+
 @Getter
 @Setter
 @Builder

@@ -7,6 +7,8 @@ import lombok.*;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
@@ -15,11 +17,20 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @Entity
 public class PostEntity extends BaseEntity{
+
+    @NotBlank
+    @NotNull
     @Id
     @GeneratedValue
     private Long id;
+    @NotBlank
+    @NotNull
     private String title;
+    @NotBlank
+    @NotNull
     private String body;
+    @NotBlank
+    @NotNull
     private String userName;
 
 //    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
