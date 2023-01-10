@@ -1,5 +1,6 @@
 package com.example.finalproject.service;
 
+import com.example.finalproject.repository.AlarmRepository;
 import com.example.finalproject.repository.CommentRepository;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
@@ -16,10 +17,11 @@ class CommentServiceTest {
     CommentRepository commentRepository = mock(CommentRepository.class);
     PostRepository postRepository = mock(PostRepository.class);
     UserRepository userRepository = mock(UserRepository.class);
+    AlarmRepository alarmRepository = mock(AlarmRepository.class);
 
     @BeforeEach
     void beforeEach_설정() {
-        service = new CommentService(commentRepository,postRepository,userRepository);
+        service = new CommentService(commentRepository,postRepository,userRepository,alarmRepository);
     }
 
     @Test
