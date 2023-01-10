@@ -17,6 +17,9 @@ public class LikeService {
     private final PostEntity post;
     public void like_on(Long postId, String userName) {
 
+        post.setId(postId);
+        user.setUserName(userName);
+
         repository.save(LikeEntity.builder()
                 .user(user)
                 .post(post)
