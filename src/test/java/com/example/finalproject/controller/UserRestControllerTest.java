@@ -15,7 +15,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static com.example.finalproject.controller.UserRestController.UserJoinRequest;
+import com.example.finalproject.domain.dto.request.UserJoinRequest;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

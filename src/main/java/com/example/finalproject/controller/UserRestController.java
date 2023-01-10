@@ -1,27 +1,30 @@
 package com.example.finalproject.controller;
 
-import com.example.finalproject.domain.dto.*;
+import com.example.finalproject.domain.dto.UserDto;
+import com.example.finalproject.domain.dto.request.UserJoinRequest;
+import com.example.finalproject.domain.dto.request.UserLoginRequest;
+import com.example.finalproject.domain.dto.response.UserJoinResponse;
+import com.example.finalproject.domain.dto.response.UserLoginResponse;
 import com.example.finalproject.domain.response.Response;
 import com.example.finalproject.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.constraints.NotBlank;
-
 @RestController
 @RequestMapping("/api/v1/users")
 @Slf4j
 @AllArgsConstructor
+@Api(tags = "User Api")
 public class UserRestController {
     private final UserService service;
 
+    @ApiOperation(value = "회원가입")
     @PostMapping("/join")
     public Response<UserJoinResponse> join(@RequestBody UserJoinRequest request) {
         log.info("{}", request);
@@ -30,6 +33,7 @@ public class UserRestController {
         return Response.success(response);
     }
 
+    @ApiOperation(value = "로그인")
     @PostMapping("/login")
     public Response<UserLoginResponse> login(@RequestBody UserLoginRequest userLoginRequest) {
         log.info("login 요청이 들어왔습니다.");
@@ -37,43 +41,4 @@ public class UserRestController {
         return Response.success(new UserLoginResponse(jwt));
     }
 
-    /**
-     * Request, Response
-     */
-    @Builder
-    @AllArgsConstructor
-    @Getter
-    public static class UserJoinRequest {
-        @NotBlank(message = "Blank")
-        private final String userName;
-        @NotBlank(message = "Blank")
-
-        private final String password;
-    }
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Getter
-    public static class UserJoinResponse {
-
-        private Long id;
-        private String userName;
-
-        public static UserJoinResponse fromUser(UserDto user) {
-            return new UserJoinResponse(user.getId(), user.getUserName());
-        }
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class UserLoginRequest {
-        private String userName;
-        private String password;
-    }
-
-    @AllArgsConstructor
-    @Getter
-    public static class UserLoginResponse {
-        private String jwt;
-    }
 }
