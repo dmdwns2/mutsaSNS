@@ -57,4 +57,10 @@ public class PostRestController {
         return Response.success(service.findAllByPage(pageable));
     }
 
+    @GetMapping("/my")
+    public Response<Page<PostResponse>> myFeed(@PageableDefault(size = 20, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable, Authentication authentication) {
+        String userName = authentication.getName();
+        Page<PostResponse> responses = service.myFeed(pageable, userName);
+        return Response.success(responses);
+    }
 }

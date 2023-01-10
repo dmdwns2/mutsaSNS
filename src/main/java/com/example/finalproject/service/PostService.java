@@ -1,6 +1,7 @@
 package com.example.finalproject.service;
 
 import com.example.finalproject.domain.PostEntity;
+import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.request.PostAddRequest;
 import com.example.finalproject.domain.dto.request.PostPutRequest;
@@ -9,6 +10,7 @@ import com.example.finalproject.domain.dto.response.PostDelResponse;
 import com.example.finalproject.domain.dto.response.PostPutResponse;
 import com.example.finalproject.domain.dto.response.PostResponse;
 import com.example.finalproject.repository.PostRepository;
+import com.example.finalproject.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,6 +25,7 @@ import java.util.stream.Collectors;
 public class PostService {
 
     private final PostRepository repository;
+    private final UserRepository userRepository;
 
     public PostDto getPostById(Long id) {
         Optional<PostEntity> optPost = repository.findById(id);
@@ -81,5 +84,14 @@ public class PostService {
         return new PostDelResponse(id, "포스트 삭제 완료");
     }
 
+    public Page<PostResponse> myFeed(Pageable pageable, String userName) {
+        Optional<UserEntity> optUser = userRepository.findByUserName(userName);
+        UserEntity user = optUser.orElse(null);
+        Page<PostEntity> visits = repository.findPostEntitiesByUserName(user, pageable);
+
+        return new PageImpl<>(visits.stream()
+                .map(PostEntity::toResponse)
+                .collect(Collectors.toList()));
+    }
 
 }
