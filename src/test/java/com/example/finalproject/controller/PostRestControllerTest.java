@@ -132,4 +132,14 @@ class PostRestControllerTest {
     @Test
     void 조회_성공_0번이_1번보다_날짜가_최신() {
     }
+
+    @Test
+    void 마이피드_조회_성공() {
+
+    }
+
+    @Test
+    void 마이피드_조회_실패_로그인_하지_않은_경우() {
+
+    }
 }

@@ -1,7 +1,6 @@
 package com.example.finalproject.service;
 
 import com.example.finalproject.domain.PostEntity;
-import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.request.PostAddRequest;
 import com.example.finalproject.domain.dto.request.PostPutRequest;
@@ -85,9 +84,8 @@ public class PostService {
     }
 
     public Page<PostResponse> myFeed(Pageable pageable, String userName) {
-        Optional<UserEntity> optUser = userRepository.findByUserName(userName);
-        UserEntity user = optUser.orElse(null);
-        Page<PostEntity> visits = repository.findPostEntitiesByUserName(user, pageable);
+
+        Page<PostEntity> visits = repository.findPostEntitiesByUserName(userName, pageable);
 
         return new PageImpl<>(visits.stream()
                 .map(PostEntity::toResponse)
