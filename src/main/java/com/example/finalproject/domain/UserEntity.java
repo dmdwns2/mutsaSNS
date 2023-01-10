@@ -32,4 +32,8 @@ public class UserEntity {
 
     @Enumerated(EnumType.STRING)
     private UserRole role;
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 }
