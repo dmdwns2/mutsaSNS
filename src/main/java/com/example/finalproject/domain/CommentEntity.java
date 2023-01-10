@@ -35,7 +35,7 @@ public class CommentEntity extends BaseEntity {
 
     public CommentResponse toResponse() {
         return CommentResponse.builder()
-                .commentId(this.id)
+                .id(this.id)
                 .comment(this.comment)
                 .userName(this.userId.getUserName())
                 .postId(this.getPostId().getId())

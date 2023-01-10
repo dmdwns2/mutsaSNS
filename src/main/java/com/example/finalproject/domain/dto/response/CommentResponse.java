@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Getter
 public class CommentResponse {
-    private final Long commentId;
+    private final Long id;
     private final String comment;
     private final String userName;
     private final Long postId;
