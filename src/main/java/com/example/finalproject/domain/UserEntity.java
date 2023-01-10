@@ -30,7 +30,7 @@ public class UserEntity implements Serializable {
     @NotNull
     private String password;
 
-    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "postId")
     @OrderBy("id asc") // 댓글 정렬
     private List<CommentEntity> comment;
 
