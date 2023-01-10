@@ -16,8 +16,6 @@ import java.util.List;
 @Entity
 public class UserEntity {
 
-    @NotBlank
-    @NotNull
     @Id
     @GeneratedValue
     private Long id;
@@ -25,7 +23,6 @@ public class UserEntity {
     @NotBlank
     @NotNull
     private String userName;
-
     @NotBlank
     @NotNull
     private String password;

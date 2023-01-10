@@ -139,7 +139,7 @@ class PostRestControllerTest {
     }
 
     @Test
-    void 마이피드_조회_실패_로그인_하지_않은_경우() {
+    void 마이피드_조회_실패_로그인_하지_않은경우() {
 
     }
 }

@@ -16,10 +16,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class PostEntity extends BaseEntity{
+public class PostEntity extends BaseEntity {
 
-    @NotBlank
-    @NotNull
     @Id
     @GeneratedValue
     private Long id;
