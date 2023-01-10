@@ -8,7 +8,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,9 +21,8 @@ public class AlarmRestController {
 
     @GetMapping()
     public Response<Page<AlarmDto>> alarmPage(@PageableDefault(size=20, sort="createdAt", direction = Sort.Direction.DESC)
-                                              Pageable pageable, Authentication authentication) {
-        String userName = authentication.getName();
-        Page<AlarmDto> page = service.alarmPage(pageable, userName);
+                                              Pageable pageable) {
+        Page<AlarmDto> page = service.alarmPage(pageable);
         return Response.success(page);
     }
 }
