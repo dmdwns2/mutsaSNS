@@ -8,6 +8,8 @@
 
 회원가입, 로그인이 가능하며 게시물을 작성, 수정, 삭제, 조회 할 수 있는 멋사SNS 개발
 
++) 마이피드, 댓글, 알람, ApiOperation 기능 추가
+
 <br> <br> <br>
 
 ## Swagger 주소
@@ -113,6 +115,82 @@ endpoint : /api/v1/posts/{id} [DELETE]
 방법 : id만 넣어주면 됨
 
 <br> <br> <br>
+> ### MyFeed
+마이피드 기능
+
+endpoint : /api/v1/posts/my [GET]
+
+로그인 해야 이용할 수 있음
+자신이 작성한 글을 리스트 형식으로 보여줌
+
+방법 : 로그인 후 사용
+
+<br> <br> <br>
+
+## 📝 Comment
+
+> ### Get
+댓글 조회 기능
+
+endpoint : /api/v1/comments/{postId} [GET]
+
+댓글 목록을 조회하는 기능
+
+방법 : 게시물 id만 넣어주면 됨
+
+<br> <br> <br>
+
+> ### Add
+댓글 작성 기능
+
+endpoint : /api/v1/comments/{postId} [POST]
+
+로그인 해야만 사용 가능
+댓글을 작성하는 기능
+
+방법 : 게시물 id를 넣어주고 내용을 적어주면 됨 
+
+<br> <br> <br>
+
+<br> <br> <br>
+
+> ### Put
+댓글 수정 기능
+
+endpoint : /api/v1/comments/{postId} [POST]
+
+로그인 해야만 사용 가능
+댓글을 수정하는 기능
+
+방법 : 게시물 id를 넣어주고 내가 작성했던 댓글 id를 입력, 내용을 적어주면 됨 
+
+<br> <br> <br>
+
+> ### Delete
+댓글 삭제 기능
+
+endpoint : /api/v1/comments/{postId} [DELETE]
+
+로그인 해야만 사용 가능
+댓글을 삭제하는 기능
+
+방법 : 삭제할 댓글 id를 넣어주면 됨
+
+<br> <br> <br>
+
+## ⏰ Alarm
+
+> ### GET
+알람 조회 기능
+
+endpoint : /api/v1/comments/{postId} [POST]
+
+로그인 해야만 사용 가능
+내가 작성한 게시물에 댓글, 좋아요를 알려주는 기능
+
+방법 : 로그인 후 실행
+
+<br> <br> <br>
 
 ## 인증/인가 방식
 
@@ -130,13 +208,16 @@ Token의 유효기간이 지났는지 확인하기
 
 Token에서 userName꺼내서 Controller에서 사용
 
+<br> <br> <br>
 
 ## 아키텍쳐
 
 ![스크린샷_2022-12-27_오후_4.33.34](/uploads/ac3da5dc9e1c314bad8e706d96084f3e/스크린샷_2022-12-27_오후_4.33.34.png)
 
 
+<br> <br> <br>
+
 ## ERD
 
 
-![ERD](/uploads/025ebf46f1bae0e616bbcf179a437499/ERD.png)
+![Untitledㅣ](/uploads/8d0bc5ece82cf2f1c13fb8f65d46bdbf/Untitledㅣ.png)
