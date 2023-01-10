@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/posts")
-@Api(tags = "Post Api")
+@Api(tags = "게시물")
 public class PostRestController {
 
     private final PostService service;

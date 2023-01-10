@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/posts")
-@Api(tags = "Comment Api")
+@Api(tags = "댓글")
 public class CommentRestController {
 
 

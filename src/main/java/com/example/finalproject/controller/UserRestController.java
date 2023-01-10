@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/users")
 @Slf4j
 @AllArgsConstructor
-@Api(tags = "User Api")
+@Api(tags = "회원가입/로그인")
 public class UserRestController {
     private final UserService service;
 
