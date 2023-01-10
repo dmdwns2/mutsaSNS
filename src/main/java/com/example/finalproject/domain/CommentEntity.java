@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 @Entity
 public class CommentEntity extends BaseEntity {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
