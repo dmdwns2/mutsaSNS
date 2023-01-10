@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Entity
 public class LikeEntity extends BaseEntity{
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
