@@ -3,6 +3,9 @@ package com.example.finalproject.service;
 import com.example.finalproject.domain.LikeEntity;
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.UserEntity;
+import com.example.finalproject.domain.dto.AlarmDto;
+import com.example.finalproject.enums.AlarmType;
+import com.example.finalproject.repository.AlarmRepository;
 import com.example.finalproject.repository.LikeRepository;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
@@ -19,6 +22,7 @@ public class LikeService {
     private final LikeRepository repository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
+    private final AlarmRepository alarmRepository;
 
     public void like_on(Long postId, String userName) {
 
@@ -35,10 +39,18 @@ public class LikeService {
                 .post(post)
                 .build()
         );
+
+        alarm(user, post, userName);
     }
 
     public Long getLike(Long postId) {
 
         return repository.countByPostId(postId);
+    }
+
+    public void alarm(UserEntity user, PostEntity post, String userName) {
+        if (!user.getUserName().equals(userName)) {
+            alarmRepository.save(AlarmDto.toEntity(AlarmType.NEW_LIKE_ON_POST, user, user.getId(), post.getId()));
+        }
     }
 }

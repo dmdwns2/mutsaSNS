@@ -3,14 +3,17 @@ package com.example.finalproject.service;
 import com.example.finalproject.domain.CommentEntity;
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.UserEntity;
+import com.example.finalproject.domain.dto.AlarmDto;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
 import com.example.finalproject.domain.dto.response.CommentPutResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
 import com.example.finalproject.domain.response.CommentDelResponse;
+import com.example.finalproject.enums.AlarmType;
 import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
+import com.example.finalproject.repository.AlarmRepository;
 import com.example.finalproject.repository.CommentRepository;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
@@ -34,6 +37,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final UserRepository userRepository;
+    private final AlarmRepository alarmRepository;
 
     /**
      * 댓글 조회 리스트형식 미완성
@@ -70,7 +74,12 @@ public class CommentService {
                 .postId(postEntity)
                 .build();
         CommentEntity saveComment = commentRepository.save(commentEntity);
+
+        alarm(userEntity,postEntity,inputUserName);
+
         return new CommentAddResponse(saveComment.getId(), saveComment.getComment(), saveComment.getUserId().getUserName(), saveComment.getPostId().getId(), saveComment.getCreatedAt());
+
+
     }
 
     /**
@@ -140,4 +149,9 @@ public class CommentService {
         });
     }
 
+    public void alarm(UserEntity user, PostEntity post, String userName) {
+        if (!user.getUserName().equals(userName)) {
+            alarmRepository.save(AlarmDto.toEntity(AlarmType.NEW_COMMENT_ON_POST, user, user.getId(), post.getId()));
+        }
+    }
 }
