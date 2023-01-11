@@ -4,12 +4,10 @@ import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.response.PostResponse;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,9 +30,9 @@ public class PostEntity extends BaseEntity {
     @NotNull
     private String userName;
 
-//    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-//    @OrderBy("id asc") // 댓글 정렬
-//    private List<CommentEntity> comments;
+    @OneToMany(mappedBy = "postId", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OrderBy("id asc") // 댓글 정렬
+    private List<CommentEntity> comments;
 
     public static PostDto of(PostEntity postEntity) {
         return new PostDto(postEntity.getId(), postEntity.getTitle(), postEntity.getBody(),

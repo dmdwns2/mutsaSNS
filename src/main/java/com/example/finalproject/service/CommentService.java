@@ -61,7 +61,7 @@ public class CommentService {
      */
     public CommentAddResponse add(CommentAddRequest request, String inputUserName, Long postId) {
         postValidate(postId);
-
+        // null 처리 orElseThrow로 람다처리
         Optional<PostEntity> optPost = postRepository.findById(postId);
         PostEntity postEntity = optPost.orElse(null);
 
