@@ -24,7 +24,7 @@ http://ec2-13-230-162-7.ap-northeast-1.compute.amazonaws.com:8080/swagger-ui/
 - 자바 : JAVA 11
 - 빌드 : Gradle 6.8 
 - 서버 : AWS EC2 사용
-- 배포 : Docker
+- 배포 : Docker / Gitlab / crontab 자동배포
 - 데이터베이스 : MySql 8.0, RDS 사용
 - 필수 라이브러리 : SpringBoot Web, MySQL, Spring Data JPA, Lombok, Spring Security
 - Swagger 3.0.0 사용
