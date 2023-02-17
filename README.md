@@ -212,7 +212,8 @@ Token에서 userName꺼내서 Controller에서 사용
 
 ## 아키텍쳐
 
-![스크린샷_2022-12-27_오후_4.33.34](/uploads/ac3da5dc9e1c314bad8e706d96084f3e/스크린샷_2022-12-27_오후_4.33.34.png)
+![스크린샷 2023-02-17 오후 4 44 51](https://user-images.githubusercontent.com/105894868/219582289-b87d24d6-bdba-4650-978f-70974b4ed978.png)
+
 
 
 <br> <br> <br>
