@@ -1,4 +1,4 @@
-# FinalProject_KimEungjun_teamN
+# FinalProject_KimEungjun
 
 ![멋사](/uploads/cba22e18f64672058ef196d4c72cf2aa/멋사.png)
 
