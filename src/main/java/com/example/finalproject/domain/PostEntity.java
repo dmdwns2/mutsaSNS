@@ -3,6 +3,8 @@ package com.example.finalproject.domain;
 import com.example.finalproject.domain.dto.PostDto;
 import com.example.finalproject.domain.dto.response.PostResponse;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Where(clause = "deleted_date is null")
+@SQLDelete(sql = "UPDATE post_entity SET deleted_date = now() WHERE id = ?")
 public class PostEntity extends BaseEntity {
 
     @Id

@@ -25,5 +25,7 @@ public class BaseEntity {
 
     @LastModifiedDate // 데이터 수정날짜를 자동으로 주입하는 어노테이션
     private LocalDateTime lastModifiedAt;
+
+    private LocalDateTime deletedDate; // 삭제일
 }
 
