@@ -1,8 +1,6 @@
-# FinalProject_KimEungjun
+# 멋쟁이사자처럼 백엔드스쿨2기 개인 프로젝트
 
-![멋사](/uploads/cba22e18f64672058ef196d4c72cf2aa/멋사.png)
-
-# 멋사스네스 (SNS)
+# 멋사스네스 (SNS) 🦁
 
 ## 개발 목적 
 
@@ -44,7 +42,23 @@ endpoint : /api/v1/users
 endpoint : /api/v1/users/join [POST]
 
 방법 : userName과 password를 작성하면 db에 저장
-
+입력 폼 (JSON 형식)
+```java 
+{
+    "userName" : "메시",
+    "password" : "123"
+}
+```
+리턴 (JSON 형식)
+```java
+{
+    "resultCode": "SUCCESS",
+    "result": {
+        "userId": 1,
+        "userName": "메시"
+    }
+}
+```
 <br> <br> <br>
 
 > ### Login
@@ -52,8 +66,23 @@ endpoint : /api/v1/users/join [POST]
 
 endpoint : /api/v1/users/login [POST]
 
-방법 : 가입된 userName과 password를 작성하면 토큰을 반환
+입력 폼 (JSON 형식)
+```java 
+{
+    "userName" : "메시",
+    "password" : "123"
+}
+```
+리턴 (JSON 형식)
+```java
+{
+     "resultCode": "SUCCESS",
+     "result": {
+         "jwt": "ajDJW26cE5.dDeqkwmeklsadkmlsa1j355joiecieifjowidfjio.qerjioeqjoriewiorjo"
+     }
+}
 
+```
 <br> <br> <br>
 
 ## 📋 Post
