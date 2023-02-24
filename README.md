@@ -354,10 +354,10 @@ endpoint : /api/v1/comments/{postId} [POST]
 
 endpoint : /api/v1/comments/{postId} [POST]
 
-입력 폼 (JSON 형식) ID : 1
+입력 폼 (JSON 형식) ID : 1 , POST ID : 2
 ```java 
 {
-  "comment": "댓글 수정"
+  "comment": "댓글 수정 완료"
 }
 ```
 리턴 (JSON 형식)
@@ -366,10 +366,11 @@ endpoint : /api/v1/comments/{postId} [POST]
   "resultCode": "SUCCESS",
   "result": {
     "id": 1,
-    "comment": "반가워요",
+    "comment": "댓글 수정 완료",
     "userName": "messi",
     "postId": 2,
-    "createdAt": "2023-02-24T23:12:27.350566"
+    "createdAt": "2023-02-24T23:12:27.350566",
+    "modifiedAt": "2023-02-25T00:11:47.091687"
   }
 }
 ```
@@ -385,6 +386,17 @@ endpoint : /api/v1/comments/{postId} [POST]
 
 endpoint : /api/v1/comments/{postId} [DELETE]
 
+입력 ID : 1 , POST ID : 2
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "message": "댓글 삭제 완료",
+    "id": 1
+  }
+}
+```
 로그인 해야만 사용 가능
 댓글을 삭제하는 기능
 
