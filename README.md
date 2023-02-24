@@ -76,12 +76,11 @@ endpoint : /api/v1/users/login [POST]
 리턴 (JSON 형식)
 ```java
 {
-     "resultCode": "SUCCESS",
-     "result": {
-         "jwt": "ajDJW26cE5.dDeqkwmeklsadkmlsa1j355joiecieifjowidfjio.qerjioeqjoriewiorjo"
-     }
+  "resultCode": "SUCCESS",
+  "result": {
+    "jwt": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyTmFtZSI6Im1lc3NpIiwiaWF0IjoxNjc3MjQ3MzY0LCJleHAiOjE2NzcyNTA5NjR9.yIczI8dH0uqUNVu2Jtd4I1bPjRWU6bwZ2j2K2fcvPKk"
+  }
 }
-
 ```
 <br> <br> <br>
 
@@ -97,9 +96,65 @@ endpoint : /api/v1/posts
 해당 id 조회
 endpoint : /api/v1/posts/{id} [GET]
 
+입력 1
+
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "id": 1,
+    "title": "안녕하세요",
+    "body": "반가워요",
+    "userName": "messi",
+    "createdAt": "2023-02-24T23:05:03.606442",
+    "lastModifiedAt": "2023-02-24T23:05:03.606442"
+  }
+}
+```
 리스트 조회
 endpoint : /api/v1/posts [GET]
 
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "content": [
+      {
+        "postId": 2,
+        "title": "출석합니다",
+        "body": "출석",
+        "userName": "messi",
+        "createdAt": "2023-02-24T23:06:39.901411",
+        "lastModifiedAt": "2023-02-24T23:06:39.901411"
+      },
+      {
+        "postId": 1,
+        "title": "안녕하세요",
+        "body": "반가워요",
+        "userName": "messi",
+        "createdAt": "2023-02-24T23:05:03.606442",
+        "lastModifiedAt": "2023-02-24T23:05:03.606442"
+      }
+    ],
+    "pageable": "INSTANCE",
+    "totalPages": 1,
+    "totalElements": 2,
+    "last": true,
+    "numberOfElements": 2,
+    "size": 2,
+    "sort": {
+      "unsorted": true,
+      "sorted": false,
+      "empty": true
+    },
+    "number": 0,
+    "first": true,
+    "empty": false
+  }
+}
+```
 id를 이용해 한건만 조회하는 기능과
 page형식으로 전체 list를 조회하는 기능
 로그인 하지 않아도 가능
@@ -115,6 +170,26 @@ page형식으로 전체 list를 조회하는 기능
 
 endpoint : /api/v1/posts [POST]
 
+입력 폼 (JSON 형식)
+```java 
+{
+  "body": "반가워요",
+  "title": "안녕하세요"
+}
+```
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "postId": 1,
+    "title": "안녕하세요",
+    "body": "반가워요",
+    "userName": "messi",
+    "message": "포스트 등록 완료"
+  }
+}
+```
 로그인 해야 이용할 수 있음
 방법 : title과 body에 제목과 내용을 입력
 
@@ -126,6 +201,26 @@ endpoint : /api/v1/posts [POST]
 
 endpoint : /api/v1/posts/{id} [PUT]
 
+입력 폼 (JSON 형식) ID : 1
+```java 
+{
+  "body": "수정완료",
+  "title": "수정테스트"
+}
+```
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "postId": 1,
+    "title": "수정테스트",
+    "body": "수정완료",
+    "userName": "messi",
+    "message": "포스트 수정 완료"
+  }
+}
+```
 로그인 해야 이용할 수 있음
 자신이 작성한 글만 수정할 수 있음
 
@@ -138,6 +233,18 @@ endpoint : /api/v1/posts/{id} [PUT]
 
 endpoint : /api/v1/posts/{id} [DELETE]
 
+입력 ID : 1
+
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "postId": 1,
+    "message": "포스트 삭제 완료"
+  }
+}
+```
 로그인 해야 이용할 수 있음
 자신이 작성한 글만 삭제할 수 있음
 
@@ -149,6 +256,46 @@ endpoint : /api/v1/posts/{id} [DELETE]
 
 endpoint : /api/v1/posts/my [GET]
 
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "content": [
+      {
+        "postId": 3,
+        "title": "멋사",
+        "body": "멋쟁이",
+        "userName": "messi",
+        "createdAt": "2023-02-24T23:10:54.98229",
+        "lastModifiedAt": "2023-02-24T23:10:54.98229"
+      },
+      {
+        "postId": 2,
+        "title": "출석합니다",
+        "body": "출석",
+        "userName": "messi",
+        "createdAt": "2023-02-24T23:06:39.901411",
+        "lastModifiedAt": "2023-02-24T23:06:39.901411"
+      }
+    ],
+    "pageable": "INSTANCE",
+    "totalPages": 1,
+    "totalElements": 2,
+    "last": true,
+    "numberOfElements": 2,
+    "size": 2,
+    "sort": {
+      "unsorted": true,
+      "sorted": false,
+      "empty": true
+    },
+    "number": 0,
+    "first": true,
+    "empty": false
+  }
+}
+```
 로그인 해야 이용할 수 있음
 자신이 작성한 글을 리스트 형식으로 보여줌
 
@@ -174,6 +321,25 @@ endpoint : /api/v1/comments/{postId} [GET]
 
 endpoint : /api/v1/comments/{postId} [POST]
 
+입력 폼 (JSON 형식) ID : 1
+```java 
+{
+  "comment": "반가워요"
+}
+```
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "id": 1,
+    "comment": "반가워요",
+    "userName": "messi",
+    "postId": 2,
+    "createdAt": "2023-02-24T23:12:27.350566"
+  }
+}
+```
 로그인 해야만 사용 가능
 댓글을 작성하는 기능
 
@@ -188,6 +354,25 @@ endpoint : /api/v1/comments/{postId} [POST]
 
 endpoint : /api/v1/comments/{postId} [POST]
 
+입력 폼 (JSON 형식) ID : 1
+```java 
+{
+  "comment": "댓글 수정"
+}
+```
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "id": 1,
+    "comment": "반가워요",
+    "userName": "messi",
+    "postId": 2,
+    "createdAt": "2023-02-24T23:12:27.350566"
+  }
+}
+```
 로그인 해야만 사용 가능
 댓글을 수정하는 기능
 
