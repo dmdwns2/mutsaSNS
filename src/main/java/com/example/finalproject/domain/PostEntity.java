@@ -29,6 +29,7 @@ public class PostEntity extends BaseEntity {
     private String title;
     @NotBlank
     @NotNull
+    @Column(columnDefinition = "TEXT")
     private String body;
     @NotBlank
     @NotNull

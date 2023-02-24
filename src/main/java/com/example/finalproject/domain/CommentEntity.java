@@ -2,6 +2,8 @@ package com.example.finalproject.domain;
 
 import com.example.finalproject.domain.dto.response.CommentResponse;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +15,8 @@ import javax.validation.constraints.Size;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity@Where(clause = "deleted_date is null")
+@SQLDelete(sql = "UPDATE comment_entity SET deleted_date = now() WHERE id = ?")
 public class CommentEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +44,10 @@ public class CommentEntity extends BaseEntity {
                 .postId(this.getPostId().getId())
                 .createdAt(getCreatedAt())
                 .build();
+    }
 
+    public void update(String comment){
+        this.comment = comment;
     }
 }
 
