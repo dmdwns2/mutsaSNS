@@ -15,7 +15,8 @@ import org.springframework.http.HttpStatus;
         COMMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "해당 댓글이 없습니다."),
         DATABASE_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "DB에러"),
         EMPTY_CONTENT(HttpStatus.NO_CONTENT, "내용을 입력해주세요"),
-        INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "인증 실패");
+        INVALID_PERMISSION(HttpStatus.UNAUTHORIZED, "인증 실패"),
+        INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,"500 서버 에러 발생");
 
 
         private HttpStatus status;
