@@ -20,7 +20,7 @@ public class LikeRestController {
     @PostMapping("/{postId}/likes")
     public Response<String> like_on(@PathVariable Long postId, Authentication authentication){
         String userName = authentication.getName();
-        service.like_on(postId, userName);
+        service.toggleLike(postId, userName);
         return Response.success("좋아요를 눌렀습니다.");
     }
 

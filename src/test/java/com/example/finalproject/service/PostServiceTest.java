@@ -14,7 +14,6 @@ class PostServiceTest {
 
     private final UserRepository userRepository = Mockito.mock(UserRepository.class);
     private final PostRepository postRepository = Mockito.mock(PostRepository.class);
-    private final PostService postService = new PostService(postRepository,userRepository);
 
 
     private final Long userId = 1L;
