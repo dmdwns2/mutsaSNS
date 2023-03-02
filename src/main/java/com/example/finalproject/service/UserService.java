@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
@@ -32,13 +33,12 @@ public class UserService {
     private long expiredTimeMs = 1000 * 60 * 60; // 1시간
 
 
+    @Transactional
     public UserDto join(String userName, String password) {
-        // 중복 Check
         userRepository.findByUserName(userName).ifPresent(user -> {
             throw new AppException(ErrorCode.DUPLICATED_USER_NAME, String.format("UserName %s is duplicated", userName));
         });
 
-        // 위에서 에러가 안났다면 회원가입(DB에 저장)
         UserEntity user = UserEntity.builder()
                 .userName(userName)
                 .password(encoder.encode(password))
@@ -46,16 +46,15 @@ public class UserService {
                 .build();
 
         UserEntity savedUser = userRepository.save(user);
-
         return UserDto.fromEntity(savedUser);
     }
     public String login(String userName, String password) {
         UserEntity userEntity = userRepository.findByUserName(userName)
                 .orElseThrow(() ->
-                        new AppException(ErrorCode.USERNAME_NOT_FOUND, String.format("userName을 확인해주세요")));
+                        new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
 
         if(!encoder.matches(password, userEntity.getPassword())){
-            throw new AppException(ErrorCode.INVALID_PASSWORD, String.format("password를 확인해주세요"));
+            throw new AppException(ErrorCode.INVALID_PASSWORD, ErrorCode.INVALID_PASSWORD.getMessage());
         }
 
         return JwtTokenUtil.createToken(userName, secretKey, expiredTimeMs);
