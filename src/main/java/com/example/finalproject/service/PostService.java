@@ -45,7 +45,7 @@ public class PostService {
             return new PostAddResponse(savedPostEntity.getId(), savedPostEntity.getTitle(), savedPostEntity.getBody(),
                     savedPostEntity.getUserName(), "포스트 등록 완료");
         } catch (Exception e) {
-            throw new AppException(ErrorCode.INTERNAL_SERVER_ERROR, "포스트 등록에 실패하였습니다.");
+            throw new AppException(ErrorCode.INTERNAL_SERVER_ERROR, ErrorCode.INTERNAL_SERVER_ERROR.getMessage());
         }
     }
 
@@ -61,7 +61,7 @@ public class PostService {
     @Transactional
     public PostPutResponse update(Long id, PostPutRequest postPutRequest, String userName) {
         Optional<PostEntity> optionalEntity = this.repository.findById(id);
-        PostEntity entity = optionalEntity.orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, "해당 게시글을 찾을 수 없습니다."));
+        PostEntity entity = optionalEntity.orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
 
         validateForDuplicateUser(entity.getUserName(), userName);
 
@@ -79,6 +79,9 @@ public class PostService {
     @Transactional
     public PostDelResponse delete(Long id, String userName) {
         Optional<PostEntity> entity = repository.findById(id);
+        if(!entity.isPresent()){
+            throw new AppException(ErrorCode.POST_NOT_FOUND,ErrorCode.POST_NOT_FOUND.getMessage());
+        }
         validateForDuplicateUser(entity.get().getUserName(), userName);
         repository.delete(entity.orElseThrow());
         return new PostDelResponse(id, "포스트 삭제 완료");
@@ -95,7 +98,7 @@ public class PostService {
 
     public void validateForDuplicateUser(String userName1, String userName2) {
         if (!userName1.equals(userName2)) {
-            throw new AppException(ErrorCode.INVALID_PERMISSION, "수정 권한이 없습니다.");
+            throw new AppException(ErrorCode.INVALID_PERMISSION, ErrorCode.INVALID_PERMISSION.getMessage());
         }
     }
 

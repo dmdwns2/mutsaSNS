@@ -2,19 +2,38 @@ package com.example.finalproject.service;
 
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.UserEntity;
+import com.example.finalproject.domain.dto.PostDto;
+import com.example.finalproject.domain.dto.request.PostAddRequest;
+import com.example.finalproject.domain.dto.request.PostPutRequest;
+import com.example.finalproject.exception.AppException;
+import com.example.finalproject.exception.ErrorCode;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.transaction.annotation.Transactional;
 
-@WebMvcTest
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
+@Transactional
 class PostServiceTest {
 
-    private final UserRepository userRepository = Mockito.mock(UserRepository.class);
-    private final PostRepository postRepository = Mockito.mock(PostRepository.class);
+    @Mock
+    private UserRepository userRepository;
 
+    @Mock
+    private PostRepository postRepository;
+
+    @InjectMocks
+    private PostService postService;
 
     private final Long userId = 1L;
     private final String userName = "userName";
@@ -41,55 +60,65 @@ class PostServiceTest {
             .body(body)
             .userName(user.getUserName())
             .build();
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
     //조회
     @Test
     @WithMockUser
     void 조회_성공() {
-//        when(postRepository.findById(postId))
-//                .thenReturn(Optional.of(post));
-//
-//        PostDto postDto = postService.getPostById(postId);
-//        assertEquals(postDto.getUserName(), userName);
+        when(postRepository.findById(postId))
+                .thenReturn(Optional.of(post));
+
+        PostDto postDto = postService.getPostById(postId);
+        assertEquals(postDto.getUserName(), userName);
     }
 
     //등록
     @Test
+    @WithMockUser
     void 등록_성공() {
-//        when(userRepository.findByUserName(userName))
-//                .thenReturn(Optional.of(user));
-//        when(postRepository.save(any()))
-//                .thenReturn(post);
-//
-//        Assertions.assertDoesNotThrow(() -> postService.add(new PostAddRequest(title, body), userName));
+        when(userRepository.findByUserName(userName))
+                .thenReturn(Optional.of(user));
+        when(postRepository.save(any()))
+                .thenReturn(post);
+
+        assertDoesNotThrow(() -> postService.add(new PostAddRequest(title, body), userName));
     }
-
-    @Test
-    void 유저가_존재하지_않을_때() {
-
-    }
-
 
     //수정
     @Test
     void 수정_실패_포스트_존재하지_않음() {
+        when(postRepository.findById(postId))
+                .thenReturn(Optional.empty());
+
+        AppException exception = assertThrows(AppException.class, () -> postService.update(postId, new PostPutRequest(title, body), userName));
+        assertEquals(ErrorCode.POST_NOT_FOUND, exception.getErrorCode());
     }
 
     @Test
     void 수정_실패_작성자가_유저가_아닐때() {
-    }
+        when(postRepository.findById(postId))
+                .thenReturn(Optional.of(post));
+        when(userRepository.findByUserName(userName))
+                .thenReturn(Optional.of(user));
+        when(userRepository.findByUserName(anotherUserName))
+                .thenReturn(Optional.of(anotherUser));
 
-    @Test
-    void 수정_실패_유저가_존재하지_않음() {
-    }
-
-    //삭제
-    @Test
-    void 삭제_실패_유저_존재하지_않음() {
+        AppException exception = assertThrows(
+                AppException.class, () -> postService.update(postId, new PostPutRequest(title, body), anotherUserName));
+        assertEquals(ErrorCode.INVALID_PERMISSION, exception.getErrorCode());
     }
 
     @Test
     void 삭제_실패_포스트_존재하지_않음() {
+        when(postRepository.findById(postId))
+                .thenReturn(Optional.empty());
+
+        AppException exception = assertThrows(AppException.class, () -> postService.delete(postId, userName));
+        assertEquals(ErrorCode.POST_NOT_FOUND, exception.getErrorCode());
     }
-
-
 }
