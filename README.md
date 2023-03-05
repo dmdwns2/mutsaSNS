@@ -446,5 +446,5 @@ Token에서 userName꺼내서 Controller에서 사용
 
 ## ERD
 
+![스크린샷 2023-03-06 오전 12 44 20](https://user-images.githubusercontent.com/105894868/222970719-1e76cd07-3a2a-424b-9d9e-61d4d824343c.png)
 
-![Untitledㅣ](/uploads/8d0bc5ece82cf2f1c13fb8f65d46bdbf/Untitledㅣ.png)
