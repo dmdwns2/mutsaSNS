@@ -25,19 +25,15 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = "댓글")
 public class CommentRestController {
 
-
     private final CommentService service;
 
-    /**
-     * 댓글 조회, 작성 , 수정, 삭제
-     */
     @ApiOperation(value = "댓글 조회")
     @GetMapping("/{postId}/comments")
     public Response<Page<CommentResponse>> getComment(
             @PageableDefault(sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable,
             @PathVariable PostEntity postId) {
-        return Response.success(service.findAllByPage(pageable,postId));
+        return Response.success(service.findAllByPage(pageable, postId.getId()));
     }
 
     // 댓글 작성
