@@ -1,14 +1,15 @@
 package com.example.finalproject.service;
 
 import com.example.finalproject.domain.AlarmEntity;
+import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.AlarmDto;
 import com.example.finalproject.enums.AlarmType;
 import com.example.finalproject.repository.AlarmRepository;
+import com.example.finalproject.repository.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,17 +17,30 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class AlarmServiceTest {
 
     @Mock
     private AlarmRepository alarmRepository;
+    @Mock
+    private UserRepository userRepository;
 
     @InjectMocks
     private AlarmService alarmService;
+
+    private final Long userId = 1L;
+    private final String userName = "messi";
+    private final String password = "password";
+    private final UserEntity user = UserEntity.builder()
+            .id(userId)
+            .userName(userName)
+            .password(password)
+            .build();
 
     @Test
     public void 알람테스트() {
@@ -48,9 +62,10 @@ public class AlarmServiceTest {
         Pageable pageable = PageRequest.of(0, 10);
         Page<AlarmEntity> page = new PageImpl<>(List.of(alarmEntity1, alarmEntity2), pageable, 2);
 
-        Mockito.when(alarmRepository.findAll(pageable)).thenReturn(page);
+        when(alarmRepository.findAlarmEntitiesByUser(user,pageable)).thenReturn(page);
+        when(userRepository.findByUserName(userName)).thenReturn(Optional.ofNullable(user));
         // when
-        Page<AlarmDto> result = alarmService.alarmPage(pageable);
+        Page<AlarmDto> result = alarmService.alarmPage(pageable, userName);
 
         // then
         assertThat(result.getContent()).hasSize(2);

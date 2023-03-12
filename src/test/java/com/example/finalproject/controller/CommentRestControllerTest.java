@@ -1,7 +1,5 @@
 package com.example.finalproject.controller;
 
-import com.example.finalproject.domain.PostEntity;
-import com.example.finalproject.domain.UserEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
@@ -42,23 +40,9 @@ class CommentRestControllerTest {
     @MockBean
     CommentService service;
 
-    private final Long userId = 1L;
     private final String userName = "userName";
-    private final String password = "password";
-    private final UserEntity user = UserEntity.builder()
-            .id(userId)
-            .userName(userName)
-            .password(password)
-            .build();
+
     private final Long postId = 1L;
-    private final String title = "title";
-    private final String body = "body";
-    private final PostEntity post = PostEntity.builder()
-            .id(postId)
-            .title(title)
-            .body(body)
-            .userName(user.getUserName())
-            .build();
 
     @Test
     @WithMockUser
