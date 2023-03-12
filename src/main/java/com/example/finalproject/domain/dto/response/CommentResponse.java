@@ -6,9 +6,6 @@ import lombok.Getter;
 
 import java.time.LocalDateTime;
 
-/**
- * Request, Response
- */
 @Builder
 @AllArgsConstructor
 @Getter

@@ -38,8 +38,9 @@ public class CommentService {
 
     @Transactional(readOnly = true)
     public Page<CommentResponse> findAllByPage(Pageable pageable, Long postId) {
-        PostEntity post = postRepository.findById(postId).orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
+        PostEntity post = postValidate(postId);
         Page<CommentEntity> comments = commentRepository.findCommentEntitiesByPostId(post, pageable);
+        commentsValidate(comments);
         List<CommentResponse> commentResponses = comments.getContent().stream()
                 .map(CommentEntity::toResponse)
                 .collect(Collectors.toList());
@@ -89,23 +90,25 @@ public class CommentService {
     }
 
     public PostEntity postValidate(Long postId) {
-        return postRepository.findById(postId).orElseThrow(() -> {
-            throw new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage());
-        });
+        return postRepository.findById(postId)
+                .orElseThrow(() -> new AppException(ErrorCode.POST_NOT_FOUND, ErrorCode.POST_NOT_FOUND.getMessage()));
     }
 
     public UserEntity userValidate(String userName) {
-        return userRepository.findByUserName(userName).orElseThrow(() -> {
-            throw new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage());
-        });
+        return userRepository.findByUserName(userName)
+                .orElseThrow(() -> new AppException(ErrorCode.USERNAME_NOT_FOUND, ErrorCode.USERNAME_NOT_FOUND.getMessage()));
     }
 
     public CommentEntity commentValidate(Long id) {
-        return commentRepository.findById(id).orElseThrow(() -> {
-            throw new AppException(ErrorCode.COMMENT_NOT_FOUND, ErrorCode.COMMENT_NOT_FOUND.getMessage());
-        });
+        return commentRepository.findById(id)
+                .orElseThrow(() -> new AppException(ErrorCode.COMMENT_NOT_FOUND, ErrorCode.COMMENT_NOT_FOUND.getMessage()));
     }
 
+    private void commentsValidate(Page<CommentEntity> comments) {
+        if (comments.isEmpty()) {
+            throw new AppException(ErrorCode.COMMENT_NOT_FOUND, ErrorCode.COMMENT_NOT_FOUND.getMessage());
+        }
+    }
     public void duplicatedUserValidate(String userName1, String userName2) {
         if (!userName1.equals(userName2)) {
             throw new AppException(ErrorCode.DUPLICATED_USER_NAME, ErrorCode.DUPLICATED_USER_NAME.getMessage());

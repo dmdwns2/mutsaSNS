@@ -1,6 +1,5 @@
 package com.example.finalproject.controller;
 
-import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
@@ -32,8 +31,8 @@ public class CommentRestController {
     public Response<Page<CommentResponse>> getComment(
             @PageableDefault(sort = "createdAt",
                     direction = Sort.Direction.DESC) Pageable pageable,
-            @PathVariable PostEntity postId) {
-        return Response.success(service.findAllByPage(pageable, postId.getId()));
+            @PathVariable Long postId) {
+        return Response.success(service.findAllByPage(pageable, postId));
     }
 
     // 댓글 작성

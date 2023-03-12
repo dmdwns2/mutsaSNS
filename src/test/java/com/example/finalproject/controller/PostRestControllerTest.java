@@ -51,7 +51,7 @@ class PostRestControllerTest {
     @BeforeEach()
     public void getToken() {
         long expireTimeMs = 1000 * 60 * 60;
-        token = JwtTokenUtil.createToken("sujin", key, System.currentTimeMillis() + expireTimeMs);
+        token = JwtTokenUtil.createToken("messi", key, System.currentTimeMillis() + expireTimeMs);
     }
 
     // GET /posts/1 로 조회시
