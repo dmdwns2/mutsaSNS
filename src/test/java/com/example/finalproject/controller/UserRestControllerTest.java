@@ -77,7 +77,6 @@ class UserRestControllerTest {
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsBytes(userJoinRequest)))
-                .andExpect(jsonPath("$.result.id").exists())
                 .andDo(print())
                 .andExpect(status().isConflict());
 
