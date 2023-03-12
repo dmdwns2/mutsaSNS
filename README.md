@@ -81,6 +81,11 @@ endpoint : /api/v1/users/login [POST]
   }
 }
 ```
+
+![스크린샷 2023-03-12 오후 9 40 39](https://user-images.githubusercontent.com/105894868/224549770-33a9e557-ea3b-4f27-8e2c-a83097136da8.png)
+
+위 사진처럼 Bearer {토큰값} 입력
+
 <br> <br> <br>
 
 ## 📋 Post
@@ -462,6 +467,50 @@ endpoint : /api/v1/comments/{postId} [DELETE]
 
 endpoint : /api/v1/comments/{postId} [POST]
 
+리턴 (JSON 형식)
+```java
+{
+  "result": {
+    "content": [
+      {
+        "alarmType": "NEW_COMMENT_ON_POST",
+        "createdAt": "2023-03-12T14:07:09.931Z",
+        "fromUserId": 0,
+        "id": 0,
+        "lastModifiedAt": "2023-03-12T14:07:09.931Z",
+        "targetId": 0,
+        "text": "string"
+      }
+    ],
+    "empty": true,
+    "first": true,
+    "last": true,
+    "number": 0,
+    "numberOfElements": 0,
+    "pageable": {
+      "offset": 0,
+      "pageNumber": 0,
+      "pageSize": 0,
+      "paged": true,
+      "sort": {
+        "empty": true,
+        "sorted": true,
+        "unsorted": true
+      },
+      "unpaged": true
+    },
+    "size": 0,
+    "sort": {
+      "empty": true,
+      "sorted": true,
+      "unsorted": true
+    },
+    "totalElements": 0,
+    "totalPages": 0
+  },
+  "resultCode": "string"
+}
+```
 로그인 해야만 사용 가능
 내가 작성한 게시물에 댓글, 좋아요를 알려주는 기능
 
