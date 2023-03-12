@@ -1,6 +1,5 @@
 package com.example.finalproject.domain;
 
-import com.example.finalproject.domain.dto.AlarmDto;
 import com.example.finalproject.enums.AlarmType;
 import lombok.*;
 
@@ -17,25 +16,15 @@ public class AlarmEntity extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 알람을 받은 사람
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
     @Enumerated(EnumType.STRING)
-    private AlarmType alarmType; // like인지 comment인지
+    private AlarmType alarmType;
 
     private Long fromUserId;
-    private Long targetId; // post.id
-    private String text; // 알람이 있습니다.
+    private Long targetId;
+    private String text;
 
-    public AlarmDto toResponse() {
-        return AlarmDto.builder()
-                .alarmType(alarmType)
-                .fromUserId(fromUserId)
-                .targetId(targetId)
-                .createdAt(getCreatedAt())
-                .lastModifiedAt(getLastModifiedAt())
-                .build();
-    }
 }

@@ -9,7 +9,6 @@ import com.example.finalproject.domain.dto.response.CommentAddResponse;
 import com.example.finalproject.domain.dto.response.CommentPutResponse;
 import com.example.finalproject.domain.dto.response.CommentResponse;
 import com.example.finalproject.domain.response.CommentDelResponse;
-import com.example.finalproject.repository.AlarmRepository;
 import com.example.finalproject.repository.CommentRepository;
 import com.example.finalproject.repository.PostRepository;
 import com.example.finalproject.repository.UserRepository;
@@ -43,8 +42,6 @@ class CommentServiceTest {
     private PostRepository postRepository;
     @Mock
     private UserRepository userRepository;
-    @Mock
-    private AlarmRepository alarmRepository;
     @Mock
     private Pageable pageable;
 

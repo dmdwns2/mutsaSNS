@@ -1,9 +1,9 @@
 package com.example.finalproject.service;
 
+import com.example.finalproject.domain.AlarmEntity;
 import com.example.finalproject.domain.CommentEntity;
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.UserEntity;
-import com.example.finalproject.domain.dto.AlarmDto;
 import com.example.finalproject.domain.dto.request.CommentAddRequest;
 import com.example.finalproject.domain.dto.request.CommentPutRequest;
 import com.example.finalproject.domain.dto.response.CommentAddResponse;
@@ -113,8 +113,20 @@ public class CommentService {
     }
 
     public void alarm(UserEntity user, PostEntity post, String userName) {
+        if (user == null || post == null) {
+            throw new AppException(ErrorCode.POST_OR_USER_NOT_FOUND, ErrorCode.POST_OR_USER_NOT_FOUND.getMessage());
+        }
+
         if (!user.getUserName().equals(userName)) {
-            alarmRepository.save(AlarmDto.toEntity(AlarmType.NEW_COMMENT_ON_POST, user, user.getId(), post.getId()));
+            AlarmEntity alarmEntity = AlarmEntity.builder()
+                    .alarmType(AlarmType.NEW_LIKE_ON_POST)
+                    .user(user)
+                    .fromUserId(user.getId())
+                    .targetId(post.getId())
+                    .text(AlarmType.NEW_LIKE_ON_POST.getText())
+                    .build();
+
+            alarmRepository.save(alarmEntity);
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.example.finalproject.service;
 
+import com.example.finalproject.domain.AlarmEntity;
 import com.example.finalproject.domain.LikeEntity;
 import com.example.finalproject.domain.PostEntity;
 import com.example.finalproject.domain.UserEntity;
-import com.example.finalproject.domain.dto.AlarmDto;
 import com.example.finalproject.enums.AlarmType;
 import com.example.finalproject.exception.AppException;
 import com.example.finalproject.exception.ErrorCode;
@@ -56,8 +56,17 @@ public class LikeService {
         if (user == null || post == null) {
             throw new AppException(ErrorCode.POST_OR_USER_NOT_FOUND, ErrorCode.POST_OR_USER_NOT_FOUND.getMessage());
         }
+
         if (!user.getUserName().equals(userName)) {
-            alarmRepository.save(AlarmDto.toEntity(AlarmType.NEW_LIKE_ON_POST, user, user.getId(), post.getId()));
+            AlarmEntity alarmEntity = AlarmEntity.builder()
+                    .alarmType(AlarmType.NEW_LIKE_ON_POST)
+                    .user(user)
+                    .fromUserId(user.getId())
+                    .targetId(post.getId())
+                    .text(AlarmType.NEW_LIKE_ON_POST.getText())
+                    .build();
+
+            alarmRepository.save(alarmEntity);
         }
     }
 }
