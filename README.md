@@ -309,6 +309,58 @@ endpoint : /api/v1/posts/my [GET]
 
 endpoint : /api/v1/comments/{postId} [GET]
 
+입력 폼 (JSON 형식) POST ID : 5
+
+리턴 (JSON 형식)
+```java
+{
+  "resultCode": "SUCCESS",
+  "result": {
+    "content": [
+      {
+        "id": 3,
+        "comment": "댓글입니다2",
+        "userName": "test",
+        "postId": 5,
+        "createdAt": "2023-03-12T21:42:41.671363"
+      },
+      {
+        "id": 2,
+        "comment": "댓글입니다1",
+        "userName": "test",
+        "postId": 5,
+        "createdAt": "2023-03-12T21:42:37.124916"
+      }
+    ],
+    "pageable": {
+      "sort": {
+        "unsorted": false,
+        "sorted": true,
+        "empty": false
+      },
+      "pageNumber": 0,
+      "pageSize": 10,
+      "offset": 0,
+      "paged": true,
+      "unpaged": false
+    },
+    "totalPages": 1,
+    "totalElements": 2,
+    "last": true,
+    "numberOfElements": 2,
+    "size": 10,
+    "first": true,
+    "number": 0,
+    "sort": {
+      "unsorted": false,
+      "sorted": true,
+      "empty": false
+    },
+    "empty": false
+  }
+}
+```
+
 댓글 목록을 조회하는 기능
 
 방법 : 게시물 id만 넣어주면 됨
