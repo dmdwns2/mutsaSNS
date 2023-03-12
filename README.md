@@ -11,7 +11,7 @@
 <br> <br> <br>
 
 ## Swagger 주소
-
+http://ec2-52-79-96-209.ap-northeast-2.compute.amazonaws.com:8080/swagger-ui/
 <br> 
 
 ## 개발환경 
